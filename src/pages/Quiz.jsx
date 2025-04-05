@@ -49,8 +49,7 @@ const Quiz = () => {
     if (!isCustomMode) return
     if (didFetchRef.current) return
     didFetchRef.current = true
-
-    fetch("http://localhost:5000/api/generate-quiz", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/generate-quiz`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +69,6 @@ const Quiz = () => {
       function read() {
         reader.read().then(({ done, value }) => {
           if (done) {
-            console.log("All questions received:", questionsArray);
             return;
           }
           const chunk = decoder.decode(value, { stream: true });
@@ -86,7 +84,6 @@ const Quiz = () => {
                 setLoading(false);
               }
               setQuestionData(prev => [...prev, data]);
-              console.log("Updated questions array:", questionsArray);
             } catch (err) {
               console.error("JSON parse error:", err, "Line:", line);
             }
