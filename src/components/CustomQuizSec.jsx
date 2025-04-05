@@ -37,7 +37,7 @@ import {
 import { Link } from 'react-router-dom'
 const CustomQuizSec = () => {
     const [num, setNum] = useState(5);
-    const [category, setCategory] = useState("")
+    const [category, setCategory] = useState("any")
     const [difficulty, setDifficulty] = useState("easy")
     const [type, setType] = useState("multiple")
     const handleCreditChange = (value) => {
@@ -112,10 +112,11 @@ const CustomQuizSec = () => {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button className="w-full hover:cursor-pointer">  <Link
+      <Link
           to={`/quiz/custom?num=${num}&category=${category}&difficulty=${difficulty}&type=${type}`}
-  
-        >Start Quiz</Link></Button>
+  className='w-full'
+        >
+        <Button className="w-full hover:cursor-pointer"> Start Quiz</Button></Link>
       </CardFooter>
     </Card>
 
