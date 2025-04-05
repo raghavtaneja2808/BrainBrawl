@@ -20,6 +20,6 @@
 ## 📦 Installation
 
 ```bash
-git clone [https://github.com/raghavtaneja2808/BrainBrawl.git](https://github.com/raghavtaneja2808/BrainBrawl.git)
+git clone https://github.com/raghavtaneja2808/BrainBrawl.git
 cd BrainBrawl
 npm install
