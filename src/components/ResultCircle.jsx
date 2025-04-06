@@ -1,5 +1,6 @@
-import React from "react"
-import { InteractiveHoverButton } from './magicui/interactive-hover-button'
+import React, { useState, useEffect } from "react";
+import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
+import DecryptedText from "./magicui/DecryptedText";
 
 const getReview = (percentage) => {
   if (percentage === 100) return "Perfect! 🔥";
@@ -11,10 +12,25 @@ const getReview = (percentage) => {
 
 const ResultCircle = ({ correct, total }) => {
   const percentage = Math.round((correct / total) * 100);
+  const [animatedPercentage, setAnimatedPercentage] = useState(0);
+
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      current += 1;
+      if (current > percentage) {
+        clearInterval(interval);
+      } else {
+        setAnimatedPercentage(current);
+      }
+    }, 20);
+    return () => clearInterval(interval);
+  }, [percentage]);
+
   const radius = 200;
   const stroke = 28;
   const strokeDasharray = 2 * Math.PI * radius;
-  const progress = (percentage / 100) * strokeDasharray;
+  const progress = (animatedPercentage / 100) * strokeDasharray;
 
   const getColor = () => {
     if (percentage >= 80) return "#4caf50";
@@ -24,19 +40,17 @@ const ResultCircle = ({ correct, total }) => {
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center gap-24 mt-8">
-      {/* Left Side: Textual Info */}
       <div className="flex flex-col items-start text-left max-w-md">
         <p className="text-3xl font-semibold">
-          You scored {correct} out of {total}
+        You scored {correct} out of {total}
         </p>
         <p className="text-2xl mt-3 italic">{getReview(percentage)}</p>
-        
-        {/* Leaderboard Button */}
-        <InteractiveHoverButton className="mt-5">Leaderboard
+
+        <InteractiveHoverButton className="mt-5">
+          Leaderboard
         </InteractiveHoverButton>
       </div>
 
-      {/* Right Side: Circle */}
       <div>
         <svg width="440" height="440">
           <circle
@@ -68,7 +82,7 @@ const ResultCircle = ({ correct, total }) => {
             fontWeight="bold"
             fill="#333"
           >
-            {percentage}%
+            {animatedPercentage}%
           </text>
         </svg>
       </div>
