@@ -1,12 +1,25 @@
-# React + Vite
+# 🧠 Brain Brawl
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Brain Brawl** is a dynamic quiz app that generates custom questions on the fly using the power of AI. Built with **Vite + React** on the frontend and a **Node.js + Express** backend powered by **Gemini API**, it streams questions in real-time for a smooth, interactive experience.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎯 Generate AI-powered questions instantly
+- 🧩 Choose difficulty, type, and number of questions
+- 🔁 Streamed question delivery (no long waits!)
+- 📦 Full-stack: Vite + React + Express + Gemini
+- 🌐 Live deployment on **Vercel** and **Railway**
 
-## Expanding the ESLint configuration
+## 🔧 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Frontend      | Backend        | Deployment     |
+|---------------|----------------|----------------|
+| React (Vite)  | Express (Node) | Vercel (client)|
+| Tailwind CSS  | Gemini API     | Railway (server)|
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/raghavtaneja2808/BrainBrawl.git
+cd BrainBrawl
+npm install
