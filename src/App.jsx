@@ -8,7 +8,6 @@ import Quiz from './pages/Quiz';
 import Loading from './components/Loading';
 
 function App() {
-  // Set theme once when app mounts
   useEffect(() => {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const theme = localStorage.theme || (prefersDark ? "dark" : "light");
