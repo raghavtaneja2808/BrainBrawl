@@ -60,7 +60,7 @@ const CustomQuizSec = () => {
                 <Input
                         type="range"
                         min="5"
-                        max="50"
+                        max="100"
                         value={num}
                         onChange={(e) => handleCreditChange(e.target.value)}
                         className="w-full accent-blue"
@@ -68,7 +68,7 @@ const CustomQuizSec = () => {
                     <Input
                         type="number"
                         min="5"
-                        max="50"
+                        max="100"
                         value={num}
                         onChange={(e) => handleCreditChange(e.target.value)}
                         className="w-full p-2 border rounded-md mt-2"
