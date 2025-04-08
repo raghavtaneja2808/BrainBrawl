@@ -1,110 +1,102 @@
-import React, { useState } from "react";
+import React from "react";
+import {
+  LogOut,
+  CheckCircle,
+  Star,
+  BarChart3,
+  Camera,
+} from "lucide-react";
 
-const Profile = () => {
-  const [userData, setUserData] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    bio: "Passionate quizzer. Loves science and tech!",
-  });
-
-  const handleInputChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+export default function ProfilePage() {
+  const userStats = {
+    name: "Explorer Hero",
+    avatarUrl: "https://i.ibb.co/3B7Z8C2/avatar.png",
+    quizzesTaken: 27,
+    highScore: 980,
+    accuracy: 86,
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center p-6 transition-colors duration-300">
-      <div className="w-full max-w-xl bg-gray-50 dark:bg-zinc-900 shadow-xl rounded-2xl p-6 border border-gray-200 dark:border-zinc-800 transition-all duration-300">
-        {/* Profile Header */}
-        <div className="flex items-center gap-6">
+    <div className="min-h-screen w-full bg-gradient-to-br from-pink-200 via-pink-100 to-white dark:from-[#121212] dark:via-[#1a1a1a] dark:to-[#121212] flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl bg-white/80 dark:bg-[#1f1f1f] backdrop-blur-md rounded-3xl shadow-2xl p-8 sm:p-12 space-y-10 transition-all">
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold text-pink-600 dark:text-pink-400">Your Quiz Profile</h1>
+          <p className="text-gray-600 dark:text-gray-400">Track your journey, grow your skills, and stay motivated 🚀</p>
+        </div>
+
+        {/* Profile Info */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-10">
           <div className="relative">
             <img
-              src="https://via.placeholder.com/100"
-              alt="User Profile"
-              className="w-24 h-24 object-cover rounded-full border-4 border-blue-500 shadow-md"
+              src={userStats.avatarUrl}
+              alt="User Avatar"
+              className="w-32 h-32 md:w-36 md:h-36 rounded-full border-4 border-pink-300 dark:border-pink-600 object-cover"
             />
-            <button
-              title="Change Photo"
-              className="absolute bottom-0 right-0 bg-white dark:bg-zinc-800 border border-gray-300 dark:border-zinc-600 rounded-full p-1 shadow hover:bg-blue-100 dark:hover:bg-zinc-700 transition"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-blue-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15.232 5.232l3.536 3.536M16.5 3.5a2.121 2.121 0 013 3L7 19.5H3v-4L16.5 3.5z"
-                />
-              </svg>
+            <button className="absolute bottom-0 right-0 p-2 bg-pink-200 dark:bg-[#2c2c2c] rounded-full shadow-lg">
+              <Camera size={18} className="text-pink-600 dark:text-pink-400" />
             </button>
-            <p className="text-xs text-center mt-2 text-gray-500 dark:text-gray-400">
-              Change Photo
-            </p>
           </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {userData.name}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">{userData.email}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-500">{userData.bio}</p>
+          <div className="text-center md:text-left space-y-1">
+            <h2 className="text-2xl font-semibold">{userStats.name}</h2>
+            <p className="text-md text-gray-700 dark:text-gray-400 italic">"Every quiz is a step forward 🧠"</p>
           </div>
         </div>
 
-        {/* Editable Fields */}
-        <div className="mt-6 space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={userData.name}
-              onChange={handleInputChange}
-              className="mt-1 w-full rounded-lg border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 transition"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={userData.email}
-              onChange={handleInputChange}
-              className="mt-1 w-full rounded-lg border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 transition"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Bio
-            </label>
-            <textarea
-              name="bio"
-              rows="3"
-              value={userData.bio}
-              onChange={handleInputChange}
-              className="mt-1 w-full rounded-lg border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 transition"
-            />
-          </div>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+          <StatCard icon={<Star size={22} />} label="Quizzes Taken" value={userStats.quizzesTaken} />
+          <StatCard icon={<BarChart3 size={22} />} label="High Score" value={`${userStats.highScore} pts`} />
+          <StatCard icon={<CheckCircle size={22} />} label="Accuracy" value={`${userStats.accuracy}%`} />
         </div>
 
-        {/* Save Button */}
-        <div className="mt-6 text-right">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold transition">
-            Save Changes
+        {/* Motivational Card */}
+        <div className="bg-pink-100 dark:bg-[#2c2c2c] rounded-xl p-6 shadow-md text-center">
+          <p className="text-lg font-medium text-pink-700 dark:text-pink-300">
+            “Success is the sum of small efforts repeated day in and day out.” — Robert Collier
+          </p>
+        </div>
+
+        {/* Actions */}
+        <div className="grid sm:grid-cols-2 gap-4">
+          <ActionItem label="View Quiz History" />
+          <ActionItem label="Explore New Challenges" />
+        </div>
+
+        {/* Footer */}
+        <div className="pt-6 text-center text-sm text-gray-600 dark:text-gray-500">
+          Keep pushing forward — your next win is just one quiz away ✨
+        </div>
+
+        {/* Sign Out */}
+        <div className="text-center">
+          <button className="flex items-center gap-2 mx-auto text-pink-600 hover:text-pink-700 dark:text-pink-400 dark:hover:text-pink-300 transition">
+            <LogOut size={18} />
+            Sign Out
           </button>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default Profile;
+function StatCard({ icon, label, value }) {
+  return (
+    <div className="bg-pink-50 dark:bg-[#2a2a2a] rounded-xl shadow p-4 hover:shadow-md transition">
+      <div className="flex justify-center items-center mb-2 text-pink-500 dark:text-pink-300">
+        {icon}
+      </div>
+      <h3 className="text-xl font-semibold">{value}</h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
+    </div>
+  );
+}
+
+function ActionItem({ label }) {
+  return (
+    <div className="flex items-center justify-between bg-white dark:bg-[#2a2a2a] p-4 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+      <p className="font-medium">{label}</p>
+      <span className="text-pink-400 dark:text-pink-300">&gt;</span>
+    </div>
+  );
+}
