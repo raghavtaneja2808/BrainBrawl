@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import ThemeToggle from "../components/ThemeToggle";
+import { X } from "lucide-react";
+import { motion } from "framer-motion";
 
-export default function Signup() {
+export default function Signup({setShowRegister,setShowLogin}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-
   const handleSignup = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -20,18 +21,19 @@ export default function Signup() {
   };
 
   return (
-    <div
-      className="relative min-h-screen flex items-center justify-center px-4
-      bg-gradient-to-br from-[#fdfbfb] to-[#ebedee] dark:from-[#0a0a0a] dark:to-[#1a1a1a]
-      transition-all duration-500 ease-in-out"
-    >
-   
-      <div className="absolute top-4 right-4">
-        <ThemeToggle />
-      </div>
-
-      <div className="bg-white dark:bg-black p-8 rounded-2xl shadow-2xl max-w-md w-full z-10
-        border border-gray-200 dark:border-gray-700 transition-all duration-500 ease-in-out">
+<div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+<motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white dark:bg-black p-8 rounded-2xl shadow-lg max-w-md w-full border border-gray-200 dark:border-gray-700 relative"
+      >      <button
+          onClick={() => setShowRegister(false)}
+          className="absolute top-4 right-4 text-xl hover:cursor-pointer"
+        >
+          <X className="w-5 h-5 hover:scale-110 hover:text-red-500 transition" />
+        </button>
         <h2 className="text-3xl font-bold mb-4 text-black dark:text-white transition-all duration-500">Sign Up</h2>
         <p className="text-gray-700 dark:text-gray-300 mb-6 transition-all duration-500">
           Create your account to get started
@@ -86,22 +88,34 @@ export default function Signup() {
           )}
 
           <button
-            type="submit"
+          type="button"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md 
               dark:bg-white dark:text-black dark:hover:bg-gray-200 font-medium 
-              transition-all duration-500"
+              transition-all duration-500 mb-3 hover:cursor-pointer"
           >
             Create Account
           </button>
+          <button
+          className="w-full flex items-center justify-center gap-2 border py-2 rounded-md 
+              text-black dark:border-white dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 
+              transition-all duration-500 hover:cursor-pointer"
+        >
+          Continue with Google
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/022/484/503/small_2x/google-lens-icon-logo-symbol-free-png.png"
+            alt="Google logo"
+            className="w-5 h-5"
+          />
+        </button>
         </form>
 
         <p className="mt-4 text-center text-gray-700 dark:text-gray-400 transition-all duration-500">
           Already have an account?{" "}
-          <a href="/login" className="underline">
+          <button  className="underline hover:cursor-pointer"onClick={()=>{setShowRegister(false);setShowLogin(true)}}>
             Login
-          </a>
+          </button>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }

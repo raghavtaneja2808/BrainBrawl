@@ -3,11 +3,15 @@ import { Button } from './ui/button'
 import { ChevronRight, Menu, X } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import { Link } from 'react-router-dom'
+import Login from './Login'
+import Signup from './Signup'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-
+  const [showLogin,setShowLogin]=useState(false)
+  const [showRegister,setShowRegister]=useState(false)
   return (
+    <>
     <div className="pt-20">
       <nav className="fixed top-0 left-0 w-full bg-white/50 backdrop-blur-lg shadow-lg border-b border-gray-200 dark:bg-black dark:border-gray-700 z-50">
         <div className="flex items-center justify-between px-4 md:px-8 py-2">
@@ -32,7 +36,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" className="bg-white text-black border border-gray-500 hover:bg-gray-100 m-1 dark:bg-black dark:text-white hover:cursor-pointer">
+            <Button onClick={()=>{setShowLogin(true)}} variant="ghost" className="bg-white text-black border border-gray-500 hover:bg-gray-100 m-1 dark:bg-black dark:text-white hover:cursor-pointer" >
               Login
             </Button>
             <Button className="hidden hover:cursor-pointer sm:block">
@@ -60,6 +64,10 @@ const Navbar = () => {
         )}
       </nav>
     </div>
+    {showLogin &&
+    <Login setShowLogin={setShowLogin} setShowRegister={setShowRegister}/>}
+    {showRegister && <Signup setShowRegister={setShowRegister} setShowLogin={setShowLogin}/>}
+    </>
   )
 }
 

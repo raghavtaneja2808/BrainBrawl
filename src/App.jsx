@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Landing from './pages/Landing';
 import CreateQuiz from './pages/CreateQuiz';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ScrollToTop from './components/ScrollToTop';
 import Quiz from './pages/Quiz';
 import Loading from './components/Loading';
@@ -18,8 +18,7 @@ function App() {
 
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, []);
-
-  return (
+   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
@@ -28,8 +27,6 @@ function App() {
         <Route path="/quiz/trivia" element={<Quiz />} />
         <Route path="/quiz/custom" element={<Quiz />} />
         <Route path="/loading" element={<Loading />} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
