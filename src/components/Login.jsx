@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 export default function Login({ setShowLogin,setShowRegister}) {
-
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/20">
       <motion.div
@@ -60,7 +62,7 @@ export default function Login({ setShowLogin,setShowRegister}) {
         <button
           className="w-full flex items-center justify-center gap-2 border py-2 rounded-md 
               text-black dark:border-white dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 
-              transition-all duration-500 hover:cursor-pointer"
+              transition-all duration-500 hover:cursor-pointer" onClick={handleGoogleLogin}
         >
           Login with Google
           <img

@@ -1,14 +1,33 @@
 const express = require("express");
 const cors = require("cors");
 const quizRoute = require("./routes/quiz");
-
+const mongoose=require("mongoose")
+const session=require("express-session");
+const passport = require("passport");
 require("dotenv").config();
 const testLoadRoute = require("./routes/testLoad");
 const app = express();
-app.use(cors());
+app.use(cors({credentials:true,origin:process.env.CLIENT_URL}));
 app.use(express.json());
 // app.use("/test", testLoadRoute);
-app.use("/api/generate-quiz", quizRoute);
+app.use(express.urlencoded({ extended: true }));
 
+app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "secret",
+      resave: false,
+      saveUninitialized: false,
+      cookie: { maxAge: 30*24*60*60*1000 },
+      sameSite: "none",         // <- Required for cross-origin
+      secure: false  
+    })
+  );
+app.use("/api/generate-quiz", quizRoute);
+app.use(passport.initialize())
+app.use(passport.session())
+require("./models/user.js");
+require("./services/passport.js")
+mongoose.connect(process.env.MONGO_URI).then(()=>console.log("DB connected"));
+require('./routes/authRoutes.js')(app);
 const PORT = 5000;
 app.listen(PORT, () => console.log("Server started on port", PORT));

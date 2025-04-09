@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button } from './ui/button'
 import { ChevronRight, Menu, X } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import { Link } from 'react-router-dom'
 import Login from './Login'
 import Signup from './Signup'
+import AuthContext from '@/assets/AuthContext'
+import Avatar from './Avatar'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [showLogin,setShowLogin]=useState(false)
   const [showRegister,setShowRegister]=useState(false)
+  let {user,refreshUser}=useContext(AuthContext);
+  console.log(user)
   return (
     <>
     <div className="pt-20">
@@ -36,12 +40,13 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button onClick={()=>{setShowLogin(true)}} variant="ghost" className="bg-white text-black border border-gray-500 hover:bg-gray-100 m-1 dark:bg-black dark:text-white hover:cursor-pointer" >
+          {user?<Avatar user={user}/>:(<>
+  <Button onClick={()=>{setShowLogin(true)}} variant="ghost" className="bg-white text-black border border-gray-500 hover:bg-gray-100 m-1 dark:bg-black dark:text-white hover:cursor-pointer" >
               Login
             </Button>
             <Button className="hidden hover:cursor-pointer sm:block">
               Get Brain+ 
-            </Button>
+            </Button></>)}
             <ThemeToggle />
 
             <button
