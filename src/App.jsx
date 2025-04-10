@@ -9,7 +9,7 @@ import Quiz from './pages/Quiz';
 import Loading from './components/Loading';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Profile from './components/Profile';
+import Profile from './pages/Profile';
 
 function App() {
   useEffect(() => {
