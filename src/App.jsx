@@ -7,15 +7,9 @@ import { useEffect, useState } from 'react';
 import ScrollToTop from './components/ScrollToTop';
 import Quiz from './pages/Quiz';
 import Loading from './components/Loading';
-<<<<<<< HEAD
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Profile from './pages/Profile';
-=======
-import Profile from './components/Profile';
 import OtpVerification from './components/OtpVerification';
 import { AuthProvider } from './assets/AuthContext';
->>>>>>> b09948db5659400f8540bfb81ca493fca6ebc439
+import Profile from './pages/Profile';
 
 function App() {
   useEffect(() => {
