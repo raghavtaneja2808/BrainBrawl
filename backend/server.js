@@ -17,10 +17,12 @@ app.use(
       secret: process.env.SESSION_SECRET || "secret",
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 30*24*60*60*1000 },
-      sameSite: "none",         // <- Required for cross-origin
-      secure: false  
-    })
+      cookie: {
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        secure: process.env.COOKIE_SECURE === "1", // HTTPS-only in prod
+        sameSite: process.env.COOKIE_SECURE === "1" ? "none" : "lax", // for cross-origin
+        httpOnly: true // good for security
+      }      })
   );
 app.use("/api/generate-quiz", quizRoute);
 app.use(passport.initialize())
