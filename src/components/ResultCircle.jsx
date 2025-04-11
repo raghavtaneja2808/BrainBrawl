@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
 import DecryptedText from "./magicui/DecryptedText";
+import { Link } from "react-router-dom";
 
 const getReview = (percentage) => {
   if (percentage === 100) return "Perfect! 🔥";
@@ -42,13 +43,15 @@ const ResultCircle = ({ correct, total }) => {
     <div className="flex flex-col md:flex-row items-center justify-center gap-24 mt-8">
       <div className="flex flex-col items-start text-left max-w-md">
         <p className="text-3xl font-semibold">
-        You scored {correct} out of {total}
+          You scored {correct} out of {total}
         </p>
         <p className="text-2xl mt-3 italic">{getReview(percentage)}</p>
 
-        <InteractiveHoverButton className="mt-5">
-          Leaderboard
-        </InteractiveHoverButton>
+        <Link to="/leaderboard">
+          <InteractiveHoverButton className="mt-5">
+            Leaderboard
+          </InteractiveHoverButton>
+        </Link>
       </div>
 
       <div>

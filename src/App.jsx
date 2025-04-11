@@ -1,24 +1,27 @@
 // src/App.jsx
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Landing from './pages/Landing';
-import CreateQuiz from './pages/CreateQuiz';
-import { useEffect, useState } from 'react';
-import ScrollToTop from './components/ScrollToTop';
-import Quiz from './pages/Quiz';
-import Loading from './components/Loading';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Profile from './components/Profile';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Landing from "./pages/Landing";
+import CreateQuiz from "./pages/CreateQuiz";
+import { useEffect, useState } from "react";
+import ScrollToTop from "./components/ScrollToTop";
+import Quiz from "./pages/Quiz";
+import Loading from "./components/Loading";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Profile from "./components/Profile";
+import Leaderboard from "./pages/Leaderboard";
 
 function App() {
   useEffect(() => {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
     const theme = localStorage.theme || (prefersDark ? "dark" : "light");
 
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, []);
-   return (
+  return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
@@ -28,6 +31,7 @@ function App() {
         <Route path="/quiz/custom" element={<Quiz />} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </BrowserRouter>
   );
