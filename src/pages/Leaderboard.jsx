@@ -2,7 +2,6 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { motion, AnimatePresence } from "framer-motion";
-import { Crown } from "lucide-react";
 import Footer from "@/components/ui/footer";
 import Navbar from "@/components/Navbar";
 
@@ -21,7 +20,6 @@ export default function LeaderboardPage() {
     <div>
       <Navbar />
       <div className="min-h-screen bg-black text-white p-8 flex flex-col gap-12">
-        {/* Current user's rank */}
         <div className="bg-slate-800 rounded-xl p-6 text-center">
           <h2 className="text-lg font-semibold">📍 Your Position</h2>
           <p className="text-xl font-bold mt-1">Rank 8 - {currentUser.name}</p>
@@ -29,7 +27,6 @@ export default function LeaderboardPage() {
         </div>
 
         <div className="flex flex-row gap-20">
-          {/* Stage for top 3 */}
           <div className="w-1/2 flex justify-center items-end gap-40 mt-24 mb-20 relative">
             {[1, 0, 2].map((pos) => (
               <div
@@ -63,7 +60,6 @@ export default function LeaderboardPage() {
             ))}
           </div>
 
-          {/* Leaderboard Scrollable */}
           <div className="w-1/2 max-h-[70vh] overflow-y-auto custom-scrollbar">
             <style jsx>{`
               .custom-scrollbar::-webkit-scrollbar {
