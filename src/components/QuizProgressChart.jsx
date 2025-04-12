@@ -22,14 +22,21 @@ const QuizProgressChart = () => {
             <XAxis dataKey="day" stroke="#8884d8" />
             <YAxis stroke="#8884d8" />
             <Tooltip
-                contentStyle={{
-                    backgroundColor: '#fff',
-                    borderColor: '#ccc',
-                }}
-                wrapperStyle={{ color: '#000' }}
-                cursor={{ fill: 'transparent' }} // Removes the hover background color
-                />
-            
+              contentStyle={{
+                backgroundColor: '#fff',
+                borderColor: '#ccc',
+                borderRadius: '8px',
+                padding: '8px',
+                fontSize: '14px',  // Default font size
+                maxWidth: '250px',  // Max width for the tooltip box
+                wordWrap: 'break-word', // Ensure text breaks inside the tooltip
+              }}
+              wrapperStyle={{
+                color: '#000',
+              }}
+              cursor={{ fill: 'transparent' }} // Removes the hover background color
+              itemStyle={{ fontSize: '14px' }}
+            />
             <Legend />
             <Bar dataKey="score" fill="#6366F1" name="Score" />
             <Bar dataKey="time" fill="#EC4899" name="Time (min)" />
