@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
   Mail, MapPin, ClipboardList, Flame, Sparkles, LogOut, Upload,
 } from 'lucide-react';
+import AuthContext from '@/assets/AuthContext';
 
 const ProfileCard = () => {
+    let {user,refreshUser}=useContext(AuthContext);
   const [motivation, setMotivation] = useState('Loading...');
 
   // 🔁 Fetch motivation quote on page load
   useEffect(() => {
     const fetchMotivation = async () => {
       try {
-        const res = await fetch(`https://api.quotable.io/random?cb=${Date.now()}`);
+        const res = await fetch(`https://api.quotable.io/random`);
         const data = await res.json();
         setMotivation(`“${data.content}” – ${data.author}`);
       } catch (error) {
@@ -25,7 +27,7 @@ const ProfileCard = () => {
   }, []);
 
   const userData = [
-    { icon: Mail, label: 'Email', value: 'quizuser@email.com' },
+    { icon: Mail, label: 'Email', value: user?.email || 'No Email' },
     { icon: MapPin, label: 'Location', value: 'Delhi, India' },
     { icon: ClipboardList, label: 'Total Quizzes Attempted', value: '24' },
     { icon: Flame, label: 'Login Streak', value: '6 days' },
@@ -38,22 +40,16 @@ const ProfileCard = () => {
         <div className="flex flex-col items-center gap-4">
           {/* Avatar */}
           <div className="relative">
-            <img
-              src="/avatar-default.png"
-              alt="User Avatar"
-              className="w-20 h-20 rounded-full border border-gray-300 dark:border-gray-700"
+          <div
+                className={"w-20 h-20 rounded-full border border-gray-300 dark:border-gray-700"}
+                dangerouslySetInnerHTML={{ __html: user?.photo||"" }}
             />
-            <Button
-              className="absolute bottom-0 right-0 p-1 bg-white dark:bg-zinc-800"
-              size="icon"
-              variant="outline"
-            >
-              <Upload className="w-4 h-4 text-gray-800 dark:text-white" />
-            </Button>
+     
+        
           </div>
 
           {/* User Info */}
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Quiz Master</h2>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white">{user?.name||""}</h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Elite Quizzer</p>
 
           {/* Data Section */}
