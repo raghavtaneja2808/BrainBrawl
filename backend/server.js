@@ -11,7 +11,7 @@ app.use(cors({credentials:true,origin:process.env.CLIENT_URL}));
 app.use(express.json());
 // app.use("/test", testLoadRoute);
 app.use(express.urlencoded({ extended: true }));
-
+app.set('trust proxy', 1);
 app.use(
     session({
       secret: process.env.SESSION_SECRET || "secret",
