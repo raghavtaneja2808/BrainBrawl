@@ -121,12 +121,12 @@ const Quiz = () => {
         ) : (
           <>
           <div className="flex flex-col items-center justify-center">
-            <h2 className="text-5xl font-extrabold text-cente  mb-6">
-              Quiz Complete 🎉
-            </h2>
-            {/* Check for Git not  being changed on vercel*/}
-            <ResultCircle correct={score} total={currentQuestionIndex} />
-          </div>
+  <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
+    Quiz Complete 🎉
+  </h2>
+  
+  <ResultCircle correct={score} total={currentQuestionIndex} />
+</div>
         </>
         )}
       </div>

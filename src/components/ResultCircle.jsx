@@ -28,8 +28,10 @@ const ResultCircle = ({ correct, total }) => {
     return () => clearInterval(interval);
   }, [percentage]);
 
-  const radius = 200;
-  const stroke = 28;
+  const baseRadius = 200;
+  const baseStroke = 28;
+  const radius = baseRadius * 0.8; // Smaller radius for smaller screens
+  const stroke = baseStroke * 0.8; // Smaller stroke width for smaller screens
   const strokeDasharray = 2 * Math.PI * radius;
   const progress = (animatedPercentage / 100) * strokeDasharray;
 
@@ -40,12 +42,12 @@ const ResultCircle = ({ correct, total }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-24 mt-8">
+    <div className="flex flex-col items-center justify-center gap-12 mt-8 md:flex-row md:gap-24">
       <div className="flex flex-col items-start text-left max-w-md">
-        <p className="text-3xl font-semibold">
+        <p className="text-2xl md:text-3xl font-semibold">
           You scored {correct} out of {total}
         </p>
-        <p className="text-2xl mt-3 italic">{getReview(percentage)}</p>
+        <p className="text-xl md:text-2xl mt-3 italic">{getReview(percentage)}</p>
 
         <Link to="/leaderboard">
           <InteractiveHoverButton className="mt-5">
@@ -54,19 +56,19 @@ const ResultCircle = ({ correct, total }) => {
         </Link>
       </div>
 
-      <div>
-        <svg width="440" height="440">
+      <div className="order-first md:order-last"> {/* Shift circle to bottom on smaller screens */}
+        <svg width={radius * 2 + stroke} height={radius * 2 + stroke}>
           <circle
-            cx="220"
-            cy="220"
+            cx={radius + stroke / 2}
+            cy={radius + stroke / 2}
             r={radius}
             fill="none"
             stroke="#e6e6e6"
             strokeWidth={stroke}
           />
           <circle
-            cx="220"
-            cy="220"
+            cx={radius + stroke / 2}
+            cy={radius + stroke / 2}
             r={radius}
             fill="none"
             stroke={getColor()}
@@ -74,16 +76,17 @@ const ResultCircle = ({ correct, total }) => {
             strokeDasharray={strokeDasharray}
             strokeDashoffset={strokeDasharray - progress}
             strokeLinecap="round"
-            transform="rotate(-90 220 220)"
+            transform={`rotate(-90 ${radius + stroke / 2} ${radius + stroke / 2})`}
           />
           <text
             x="50%"
             y="50%"
             dominantBaseline="middle"
             textAnchor="middle"
-            fontSize="60"
+            fontSize="40" // Smaller font size
             fontWeight="bold"
             fill="#333"
+            transform={`translate(${radius + stroke / 2 - radius}, ${radius + stroke / 2 - radius})`} // Adjust text position
           >
             {animatedPercentage}%
           </text>
