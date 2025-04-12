@@ -5,8 +5,27 @@ import {
   Mail, MapPin, ClipboardList, Flame, Sparkles, LogOut, Upload,
 } from 'lucide-react';
 import AuthContext from '@/assets/AuthContext';
+import axios from 'axios';
 
 const ProfileCard = () => {
+  const Logout = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+        withCredentials: true,
+      });
+  
+      if (res.data.message) {
+        console.log("Logout successful");
+        setTimeout(() => {
+          window.location = "/";
+        }, 300); // small delay to ensure cookie/session clears
+      } else {
+        console.log("Logout response invalid");
+      }
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+  };
     let {user,refreshUser}=useContext(AuthContext);
   const [motivation, setMotivation] = useState('Loading...');
 
@@ -72,8 +91,8 @@ const ProfileCard = () => {
 
           {/* Sign Out */}
           <div className="mt-6 w-full flex justify-center">
-            <button className="flex items-center gap-2 text-sm text-red-500 hover:underline">
-              <LogOut className="w-4 h-4" />
+            <button className="flex items-center gap-2 text-sm text-red-500 hover:underline hover:cursor-pointer">
+              <LogOut className="w-4 h-4" onClick={Logout}/>
               Sign Out
             </button>
           </div>

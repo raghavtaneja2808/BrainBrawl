@@ -12,11 +12,17 @@ app.use(express.json());
 // app.use("/test", testLoadRoute);
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
+const MongoStore = require("connect-mongo");
 app.use(
     session({
       secret: process.env.SESSION_SECRET || "secret",
       resave: false,
       saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        collectionName: "sessions",
+        ttl: 30 * 24 * 60 * 60 // 30 days in seconds
+      }),
       cookie: {
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         secure: process.env.COOKIE_SECURE === "1", // HTTPS-only in prod
