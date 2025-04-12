@@ -7,11 +7,11 @@ const passport = require("passport");
 require("dotenv").config();
 const testLoadRoute = require("./routes/testLoad");
 const app = express();
+app.set('trust proxy', 1);
 app.use(cors({credentials:true,origin:process.env.CLIENT_URL}));
 app.use(express.json());
 // app.use("/test", testLoadRoute);
 app.use(express.urlencoded({ extended: true }));
-app.set('trust proxy', 1);
 const MongoStore = require("connect-mongo");
 app.use(
     session({
