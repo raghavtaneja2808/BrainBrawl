@@ -124,7 +124,14 @@ app.get("/check-session", (req, res) => {
     console.log("Session data:", req.session);
     res.send(req.session);
 });
-
+app.get("/cookie-check", (req, res) => {
+  res.cookie("test-cookie", "123", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+  });
+  res.send("cookie set");
+});
 app.get("/logout", (req, res, next) => {
     console.log("Logout route hit"); // Should see this 
   req.logout((err) => {
