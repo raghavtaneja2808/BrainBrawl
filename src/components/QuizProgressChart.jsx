@@ -12,32 +12,36 @@ const data = [
   { day: 'Fri', score: 75, time: 5 },
 ];
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white dark:bg-zinc-800 text-black dark:text-white border border-gray-300 dark:border-zinc-700 rounded-lg p-3 text-sm max-w-xs">
+        <p className="font-semibold">{label}</p>
+        {payload.map((entry, index) => (
+          <p key={index} className="text-sm">
+            {entry.name}: {entry.value}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const QuizProgressChart = () => {
   return (
-    <Card className="w-full bg-white dark:bg-zinc-900 shadow-md rounded-2xl">
+    <Card className="w-full bg-white dark:bg-black shadow-md rounded-2xl border border-gray-200 dark:border-zinc-700">
       <CardContent>
-        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Quiz Progress</h3>
+        <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+          Quiz Progress
+        </h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
-            <XAxis dataKey="day" stroke="#8884d8" />
-            <YAxis stroke="#8884d8" />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#fff',
-                borderColor: '#ccc',
-                borderRadius: '8px',
-                padding: '8px',
-                fontSize: '14px',  // Default font size
-                maxWidth: '250px',  // Max width for the tooltip box
-                wordWrap: 'break-word', // Ensure text breaks inside the tooltip
-              }}
-              wrapperStyle={{
-                color: '#000',
-              }}
-              cursor={{ fill: 'transparent' }} // Removes the hover background color
-              itemStyle={{ fontSize: '14px' }}
-            />
-            <Legend />
+            <XAxis dataKey="day" stroke="#a1a1aa" />
+            <YAxis stroke="#a1a1aa" />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
+            <Legend wrapperStyle={{ color: 'var(--text-color)' }} />
             <Bar dataKey="score" fill="#6366F1" name="Score" />
             <Bar dataKey="time" fill="#EC4899" name="Time (min)" />
           </BarChart>
