@@ -114,6 +114,9 @@ app.get('/auth/google/callback',passport.authenticate('google'),
   });
 app.get('/current_user',(req,res)=>{
     console.log("Accessing current user request recieved",req.user);
+    console.log("Cookies:", req.headers.cookie); // check if cookie is arriving
+  console.log("Session:", req.session);         // check if session exists
+  console.log("User:", req.user);         
     res.send(req.user);
 }
 )
@@ -121,7 +124,14 @@ app.get("/check-session", (req, res) => {
     console.log("Session data:", req.session);
     res.send(req.session);
 });
-
+app.get("/cookie-check", (req, res) => {
+  res.cookie("test-cookie", "123", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+  });
+  res.send("cookie set");
+});
 app.get("/logout", (req, res, next) => {
     console.log("Logout route hit"); // Should see this 
   req.logout((err) => {

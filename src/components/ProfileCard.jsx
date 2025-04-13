@@ -4,12 +4,52 @@ import {
   Mail, MapPin, ClipboardList, Flame, LogOut,
 } from 'lucide-react';
 import AuthContext from '@/assets/AuthContext';
+import axios from 'axios';
 
 const ProfileCard = () => {
+<<<<<<< HEAD
   const { user } = useContext(AuthContext);
   const [location, setLocation] = useState('Delhi, India');
   const [isEditing, setIsEditing] = useState(false);
   const [tempLocation, setTempLocation] = useState(location);
+=======
+  const Logout = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+        withCredentials: true,
+      });
+  
+      if (res.data.message) {
+        console.log("Logout successful");
+        setTimeout(() => {
+          window.location = "/";
+        }, 300); // small delay to ensure cookie/session clears
+      } else {
+        console.log("Logout response invalid");
+      }
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+  };
+    let {user,refreshUser}=useContext(AuthContext);
+  const [motivation, setMotivation] = useState('Loading...');
+
+  // 🔁 Fetch motivation quote on page load
+  useEffect(() => {
+    const fetchMotivation = async () => {
+      try {
+        const res = await fetch(`https://api.quotable.io/random`);
+        const data = await res.json();
+        setMotivation(`“${data.content}” – ${data.author}`);
+      } catch (error) {
+        console.error('Failed to fetch quote:', error);
+        setMotivation('“Keep learning, keep growing.”');
+      }
+    };
+
+    fetchMotivation();
+  }, []);
+>>>>>>> 1722d55d7728632eeae4f81ea13e35b57fdd579f
 
   const userData = [
     { icon: Mail, label: 'Email', value: user?.email || 'No Email' },
@@ -85,8 +125,13 @@ const ProfileCard = () => {
 
           {/* Sign Out */}
           <div className="mt-6 w-full flex justify-center">
+<<<<<<< HEAD
             <button className="flex items-center gap-2 text-sm text-red-500 hover:underline">
               <LogOut className="w-5 h-5" />
+=======
+            <button className="flex items-center gap-2 text-sm text-red-500 hover:underline hover:cursor-pointer">
+              <LogOut className="w-4 h-4" onClick={Logout}/>
+>>>>>>> 1722d55d7728632eeae4f81ea13e35b57fdd579f
               Sign Out
             </button>
           </div>

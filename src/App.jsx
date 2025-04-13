@@ -12,8 +12,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import OtpVerification from "./components/OtpVerification";
 import { AuthProvider } from "./assets/AuthContext";
 import Profile from "./pages/Profile";
+import axios from "axios";
 
 function App() {
+  axios.defaults.withCredentials=true
   useEffect(() => {
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"

@@ -7,7 +7,9 @@ const userSchema=Schema({
     email:{type:String,required:true},
     password:{type:String,required:true},
     photo:String,
-    verified:{type:Boolean,required:true}
+    verified:{type:Boolean,required:true},
+    score:{type:Number,default:0},
+    accuracy:{type:Number,default:0}
 })
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();

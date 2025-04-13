@@ -7,21 +7,28 @@ const passport = require("passport");
 require("dotenv").config();
 const testLoadRoute = require("./routes/testLoad");
 const app = express();
+app.set('trust proxy', true);
 app.use(cors({credentials:true,origin:process.env.CLIENT_URL}));
 app.use(express.json());
 // app.use("/test", testLoadRoute);
 app.use(express.urlencoded({ extended: true }));
-
+const MongoStore = require("connect-mongo");
 app.use(
     session({
       secret: process.env.SESSION_SECRET || "secret",
       resave: false,
       saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        collectionName: "sessions",
+        ttl: 30 * 24 * 60 * 60 // 30 days in seconds
+      }),
       cookie: {
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         secure: process.env.COOKIE_SECURE === "1", // HTTPS-only in prod
         sameSite: process.env.COOKIE_SECURE === "1" ? "none" : "lax", // for cross-origin
-        httpOnly: true // good for security
+        httpOnly: true, // good for security
+        // domain: '.railway.app' // Allows subdomains to access the cookie
       }      })
   );
 app.use("/api/generate-quiz", quizRoute);
