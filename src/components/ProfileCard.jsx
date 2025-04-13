@@ -33,7 +33,7 @@ const ProfileCard = () => {
   useEffect(() => {
     const fetchMotivation = async () => {
       try {
-        const res = await fetch(`https://api.quotable.io/random`);
+        const res = await fetch("https://api.quotable.io/random");
         const data = await res.json();
         setMotivation(`“${data.content}” – ${data.author}`);
       } catch (error) {
