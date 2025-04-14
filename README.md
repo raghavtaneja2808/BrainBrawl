@@ -66,7 +66,7 @@ npm run dev
 
 - ✅ Mobile-friendly UI  
 - ✅ Dark Mode  
-- 🔜 User authentication & profiles
+- ✅ User authentication & profiles
 
 ## 🤩Upcoming Features
   
