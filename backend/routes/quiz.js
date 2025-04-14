@@ -42,41 +42,39 @@ router.post("/generate-quiz", async (req, res) => {
 router.post("/quiz/submit", ensureAuth, async (req, res) => {
   const mongoose=require("mongoose");
       const User=mongoose.model("users");
-      const moment = require("moment");
 
-async function updateLoginStreak(user, score, timeSpent) {
+      const moment = require("moment-timezone");
 
-  const today = moment().startOf("day");
-  const lastLogin = moment(user.lastLoginDate).startOf("day");
-  const dayName = today.format("ddd"); // 'Mon', 'Tue', etc.
-
-  // Streak update
-  if (today.diff(lastLogin, "days") === 1) {
-    user.streak += 1;
-  } else if (today.diff(lastLogin, "days") > 1) {
-    user.streak = 1;
-  }
-
-  user.lastLoginDate = new Date();
-
-  // Daily stats update
-  const existing = user.dailyStats.find((entry) => entry.day === dayName);
-  if (existing) {
-    existing.score += score;
-    existing.timeSpent += timeSpent;
-  } else {
-    user.dailyStats.push({ day: dayName, score, timeSpent });
-  }
-
-  await user.save();
-}
+      async function updateLoginStreak(user, score, timeSpent) {
+        const today = moment().tz("Asia/Kolkata").startOf("day"); // use your timezone
+        const lastLogin = moment(user.lastLoginDate).tz("Asia/Kolkata").startOf("day");
+        const dayName = today.format("ddd");
+      
+        if (today.diff(lastLogin, "days") === 1) {
+          user.streak += 1;
+        } else if (today.diff(lastLogin, "days") > 1) {
+          user.streak = 1;
+        }
+      
+        user.lastLoginDate = new Date();
+      
+        const existing = user.dailyStats.find((entry) => entry.day === dayName);
+        if (existing) {
+          existing.score += score;
+          existing.timeSpent += timeSpent;
+        } else {
+          user.dailyStats.push({ day: dayName, score, timeSpent });
+        }
+      
+        await user.save();
+      }
+      
 
   const { score, correctAnswers, totalQuestions, timeSpent } = req.body;
   const getDayOfWeek = () => {
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const today = new Date();
-    return daysOfWeek[today.getDay()];
+    return moment().tz("Asia/Kolkata").format("ddd");
   };
+  
   if (!score && score !== 0) return res.status(400).json({ error: "Missing score" });
   try {
     const user = await User.findById(req.user._id);

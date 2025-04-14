@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "@/components/Loading";
@@ -6,11 +6,12 @@ import Navbar from "@/components/Navbar";
 import QuestionsCard from "@/components/QuestionsCard";
 import Footer from "@/components/ui/footer";
 import ResultCircle from "@/components/ResultCircle";
+import AuthContext from "@/assets/AuthContext";
 
 const Quiz = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-
+  const {user,refreshUser}=useContext(AuthContext)
   const num = searchParams.get("num");
   const category = searchParams.get("category");
   const difficulty = searchParams.get("difficulty");
@@ -125,16 +126,14 @@ const Quiz = () => {
       submitResult();
     }
   }, [currentQuestionIndex, questionData]);
-
+  const quizCompleted = currentQuestionIndex >= questionData.length;
   if (loading) return <Loading text={"Generating Questions for You"} />;
 
   if (!questionData || questionData.length === 0) {
     return <p className="text-center mt-20 text-xl">No questions found.</p>;
   }
 
-  const quizCompleted = currentQuestionIndex >= questionData.length;
   const currentQuestion = questionData[currentQuestionIndex];
-
   return (
     <div>
       <Navbar />
