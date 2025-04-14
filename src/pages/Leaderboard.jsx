@@ -181,7 +181,7 @@ export default function LeaderboardPage() {
             <div className="w-full flex justify-center items-start gap-6 md:gap-12 mt-32 mb-10">
               {[1, 0, 2].map((pos) => (
                 <div key={pos} className="flex flex-col items-center relative">
-                  <div className={`p-3 rounded-full border-4 border-yellow-400 shadow-xl ${avatarOffsetY[pos]}`}>
+                  <div className={`p-3 rounded-full border-4 border-gradient-to-r from-blue-500 to-purple-600shadow-xl ${avatarOffsetY[pos]}`}>
                     <Avatar className="w-16 h-16 md:w-24 md:h-24">
                       <AvatarImage src={`https://avatars.dicebear.com/api/avataaars/${topThree[pos].username}.svg`} />
                       <AvatarFallback>{topThree[pos].name.slice(0, 2).toUpperCase()}</AvatarFallback>
