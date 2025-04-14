@@ -97,7 +97,7 @@ const Quiz = () => {
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prev) => prev + 1);
-    
+
   };
 
   const submitResult = async () => {
@@ -139,14 +139,6 @@ const Quiz = () => {
     <div>
       <Navbar />
       <div className="flex justify-between items-start px-4 py-10">
-        {/* Custom Mode Section (Left side) */}
-        <div className="w-full md:w-1/3 pr-4">
-          <h2 className="text-xl font-bold mb-4">Custom Quiz Mode</h2>
-          {/* You can display the custom quiz mode information or setup here */}
-          <p>Category: {category}</p>
-          <p>Difficulty: {difficulty}</p>
-          <p>Type: {type}</p>
-        </div>
 
         {/* Trivia Mode Section (Right side) */}
         <div className="w-full md:w-2/3">
@@ -168,7 +160,6 @@ const Quiz = () => {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
