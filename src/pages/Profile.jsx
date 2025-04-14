@@ -18,7 +18,7 @@ const Profile = () => {
     fetchData();
   }, []);
   // done
-  
+  // done
   if(loading)return <Loading text="Loading data"/>
   return (
     <div>
@@ -36,6 +36,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      {/* done */}
     </div>
   );
 };
