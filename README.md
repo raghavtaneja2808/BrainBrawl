@@ -1,5 +1,3 @@
----
-
 # 🧠 Brain Brawl
 
 **Brain Brawl** is a dynamic and responsive quiz app that generates AI-powered questions on the fly using the **Gemini API**. Whether you're practicing for fun or competing with friends, Brain Brawl delivers questions in real-time for a smooth and engaging experience.
