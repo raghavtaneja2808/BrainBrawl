@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import { Card, CardContent } from "../components/ui/card";
 import AuthContext from '@/assets/AuthContext';
+import Loading from './Loading';
 
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const CustomTooltip = ({ active, payload, label }) => {
@@ -25,6 +26,16 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const QuizProgressChart = () => {
   let {user,refreshUser}=useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      refreshUser(); 
+    } else {
+      setLoading(false); 
+    }
+  }, [user, refreshUser])
+  if(loading)return <Loading text="Loading data"/>
   const data = daysOfWeek.map(day => {
     const stats = user?.dailyStats?.find(entry => entry.day === day);
     return {
