@@ -10,7 +10,6 @@ const Quiz = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
 
-  // Get params for trivia mode
   const num = searchParams.get("num");
   const category = searchParams.get("category");
   const difficulty = searchParams.get("difficulty");
@@ -21,9 +20,12 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const didFetchRef = useRef(false);
+  const [startTime] = useState(Date.now()); // ✅ Track quiz start time
+  const [submitted, setSubmitted] = useState(false); // ✅ To avoid duplicate submit
 
   const isTriviaMode = location.pathname.includes("trivia");
   const isCustomMode = location.pathname.includes("custom");
+
   useEffect(() => {
     if (!isTriviaMode) return;
     if (didFetchRef.current) return;
@@ -46,15 +48,15 @@ const Quiz = () => {
         setLoading(false);
       });
   }, [isTriviaMode, num, type, difficulty, category]);
+
   useEffect(() => {
     if (!isCustomMode) return;
     if (didFetchRef.current) return;
     didFetchRef.current = true;
+
     fetch(`${import.meta.env.VITE_API_URL}/api/generate-quiz`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         numQuestions: num,
         difficulty: difficulty,
@@ -65,12 +67,9 @@ const Quiz = () => {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
-      let questionsArray = [];
       function read() {
         reader.read().then(({ done, value }) => {
-          if (done) {
-            return;
-          }
+          if (done) return;
           const chunk = decoder.decode(value, { stream: true });
           buffer += chunk;
           const lines = buffer.split("\n");
@@ -79,11 +78,8 @@ const Quiz = () => {
             if (!line.trim()) continue;
             try {
               const data = JSON.parse(line);
-              questionsArray.push(data);
-              if (loading) {
-                setLoading(false);
-              }
               setQuestionData((prev) => [...prev, data]);
+              setLoading(false);
             } catch (err) {
               console.error("JSON parse error:", err, "Line:", line);
             }
@@ -94,9 +90,43 @@ const Quiz = () => {
       read();
     });
   }, [isCustomMode, num, type, difficulty, category]);
+
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prev) => prev + 1);
   };
+
+  // ✅ Submit data to backend once quiz ends
+  const submitResult = async () => {
+    if (submitted) return;
+    setSubmitted(true);
+
+    const payload = {
+      score: score,
+      correctAnswers: score,
+      totalQuestions: currentQuestionIndex,
+      timeSpent: Math.floor((Date.now() - startTime) / 60000), // in minutes
+    };
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/quiz/submit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // use this if using sessions
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      console.log("Submitted:", data);
+    } catch (error) {
+      console.error("Error submitting quiz result:", error);
+    }
+  };
+
+  // ✅ Call submit when quiz ends
+  useEffect(() => {
+    if (!questionData[currentQuestionIndex]) {
+      submitResult();
+    }
+  }, [currentQuestionIndex]);
 
   if (loading) return <Loading />;
 
@@ -115,19 +145,16 @@ const Quiz = () => {
             questionData={currentQuestion}
             onOptionSelect={handleNextQuestion}
             Index={currentQuestionIndex}
-            onNext={() => setCurrentQuestionIndex((prev) => prev + 1)}
+            onNext={handleNextQuestion}
             onCorrect={() => setScore((prev) => prev + 1)}
           />
         ) : (
-          <>
           <div className="flex flex-col items-center justify-center">
-  <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
-    Quiz Complete 🎉
-  </h2>
-  
-  <ResultCircle correct={score} total={currentQuestionIndex} />
-</div>
-        </>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
+              Quiz Complete 🎉
+            </h2>
+            <ResultCircle correct={score} total={currentQuestionIndex} />
+          </div>
         )}
       </div>
       <Footer />

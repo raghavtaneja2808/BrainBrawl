@@ -1,3 +1,5 @@
+const { Schema, default: mongoose } = require("mongoose");
+
 const userSchema = Schema({
     googleID: { type: String, required: false },
     name: { type: String, required: true },
@@ -14,3 +16,4 @@ const userSchema = Schema({
     streak: { type: Number, default: 0 },
     lastLoginDate: { type: Date, default: Date.now },
 });
+module.exports = mongoose.model("users", userSchema);

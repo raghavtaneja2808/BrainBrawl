@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import {
   Mail, MapPin, ClipboardList, Flame, LogOut,
@@ -7,23 +7,23 @@ import AuthContext from '@/assets/AuthContext';
 import axios from 'axios';
 
 const ProfileCard = () => {
-<<<<<<< HEAD
-  const { user } = useContext(AuthContext);
+  const { user, refreshUser } = useContext(AuthContext);
   const [location, setLocation] = useState('Delhi, India');
   const [isEditing, setIsEditing] = useState(false);
   const [tempLocation, setTempLocation] = useState(location);
-=======
+  const [motivation, setMotivation] = useState('Loading...');
+
   const Logout = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
         withCredentials: true,
       });
-  
+
       if (res.data.message) {
         console.log("Logout successful");
         setTimeout(() => {
           window.location = "/";
-        }, 300); // small delay to ensure cookie/session clears
+        }, 300);
       } else {
         console.log("Logout response invalid");
       }
@@ -31,10 +31,7 @@ const ProfileCard = () => {
       console.error("Logout error:", err);
     }
   };
-    let {user,refreshUser}=useContext(AuthContext);
-  const [motivation, setMotivation] = useState('Loading...');
 
-  // 🔁 Fetch motivation quote on page load
   useEffect(() => {
     const fetchMotivation = async () => {
       try {
@@ -49,7 +46,6 @@ const ProfileCard = () => {
 
     fetchMotivation();
   }, []);
->>>>>>> 1722d55d7728632eeae4f81ea13e35b57fdd579f
 
   const userData = [
     { icon: Mail, label: 'Email', value: user?.email || 'No Email' },
@@ -61,6 +57,7 @@ const ProfileCard = () => {
     <div className="min-h-screen mt-[-46px] bg-white dark:bg-black flex justify-center items-center px-4 py-6 md:py-10">
       <Card className="w-full max-w-lg bg-white dark:bg-black border border-gray-300 dark:border-gray-600 rounded-3xl shadow-xl p-6">
         <div className="flex flex-col items-center gap-6">
+
           {/* Avatar */}
           <div
             className="w-28 h-28 md:w-36 md:h-36 rounded-full border-4 border-gray-300 dark:border-gray-500 mb-4"
@@ -123,15 +120,18 @@ const ProfileCard = () => {
             ))}
           </div>
 
+          {/* Motivation */}
+          <div className="mt-4 text-center text-sm italic text-gray-500 dark:text-gray-400">
+            {motivation}
+          </div>
+
           {/* Sign Out */}
           <div className="mt-6 w-full flex justify-center">
-<<<<<<< HEAD
-            <button className="flex items-center gap-2 text-sm text-red-500 hover:underline">
-              <LogOut className="w-5 h-5" />
-=======
-            <button className="flex items-center gap-2 text-sm text-red-500 hover:underline hover:cursor-pointer">
-              <LogOut className="w-4 h-4" onClick={Logout}/>
->>>>>>> 1722d55d7728632eeae4f81ea13e35b57fdd579f
+            <button
+              onClick={Logout}
+              className="flex items-center gap-2 text-sm text-red-500 hover:underline hover:cursor-pointer"
+            >
+              <LogOut className="w-4 h-4" />
               Sign Out
             </button>
           </div>
