@@ -62,11 +62,14 @@ npm run dev
 
 ---
 
-## 🌟 Upcoming Features
+## 🌟 New Features
 
 - ✅ Mobile-friendly UI  
 - ✅ Dark Mode  
-- 🔜 User authentication & profiles  
+- 🔜 User authentication & profiles
+
+## 🤩Upcoming Features
+  
 - 🔜 Global and topic-wise leaderboards  
 - 🔜 Personalized learning insights  
 - 🔜 Gamification elements like XP, badges, and streaks
