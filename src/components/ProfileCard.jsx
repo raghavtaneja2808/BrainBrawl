@@ -5,7 +5,6 @@ import {
     CheckCircle,
 } from 'lucide-react';
 import AuthContext from '@/assets/AuthContext';
-import axios from 'axios';
 
 const ProfileCard = () => {
     const { user } = useContext(AuthContext);

@@ -14,6 +14,7 @@ import { AuthProvider } from "./assets/AuthContext";
 import Profile from "./pages/Profile";
 import axios from "axios";
 import FeedbackPage from "./pages/FeedbackPage";
+import Payment from "./components/Payment";
 
 function App() {
   axios.defaults.withCredentials=true
@@ -38,6 +39,7 @@ function App() {
           <Route path="/loading" element={<Loading />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/payment" element={<Payment />} />
 
           <Route path="/feedback" element={< FeedbackPage />} />
         </Routes>
