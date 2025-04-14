@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,14 +8,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/ui/footer";
 
 const Payment = () => {
+  const location = useLocation();
+  const { planType, amount } = location.state || { planType: "monthly", amount: 200 };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-pink-100 via-white to-purple-100 text-black dark:from-zinc-900 dark:via-black dark:to-zinc-800 dark:text-white transition-colors duration-500">
-
       <Navbar />
 
       {/* Main Content */}
       <div className="flex flex-col md:flex-row flex-1 px-6 md:px-12 py-10 gap-10 items-start justify-center animate-fadeInUp">
-        
         {/* Left Info Section */}
         <div className="md:w-1/4 w-full space-y-4 text-center md:text-left">
           <h2 className="text-3xl font-extrabold">🧠 Brain Brawl</h2>
@@ -59,13 +61,13 @@ const Payment = () => {
                 <div>
                   <Label>Amount</Label>
                   <div className="bg-purple-100 dark:bg-zinc-800 p-3 rounded mt-1 font-semibold text-center">
-                    ₹99 - Premium Quiz Access
+                    ₹{amount} - {planType === "monthly" ? "Monthly" : "Yearly"} Premium Plan
                   </div>
                 </div>
 
                 <Button
                   className="w-full text-lg py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
-                  aria-label="Pay ₹99 for Premium Quiz Access"
+                  aria-label={`Pay ₹${amount} for ${planType} Premium Plan`}
                 >
                   Pay Now
                 </Button>

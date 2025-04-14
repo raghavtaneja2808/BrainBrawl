@@ -28,18 +28,10 @@ export default function CreateQuiz() {
             </span>
           </h1>
 
-          <div className="flex flex-col md:flex-row items-center justify-evenly gap-10 mb-16">
-            {/* Trivia Mode */}
-            <div className="bg-card border border-border rounded-2xl p-6 w-full max-w-md shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-md">
-              <h2 className="text-xl font-bold text-center mb-4">Trivia Quiz</h2>
-              <p className="text-sm text-muted-foreground text-center mb-6">
-                Create quizzes using popular trivia categories and topics.
-              </p>
-              <TriviaQuizSec />
-            </div>
-
-            {/* Custom Mode */}
-            <div className="bg-card border border-border rounded-2xl p-6 w-full max-w-md shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-md">
+          {/* Left-Right Flex Layout for Custom and Trivia Quiz */}
+          <div className="flex flex-col md:flex-row justify-evenly gap-10 mb-16">
+            {/* Custom Quiz Section (Left) */}
+            <div className="flex-1 bg-card border border-border rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-md w-full max-w-md">
               <h2 className="text-xl font-bold text-center mb-4">Custom Quiz</h2>
               <p className="text-sm text-muted-foreground text-center mb-6">
                 Add your own questions and categories. <br />
@@ -49,9 +41,21 @@ export default function CreateQuiz() {
               </p>
               <CustomQuizSec />
             </div>
+
+            {/* Trivia Quiz Section (Right) */}
+            <div className="flex-1 bg-card border border-border rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-md w-full max-w-md">
+              <h2 className="text-xl font-bold text-center mb-4">Trivia Quiz</h2>
+              <p className="text-sm text-muted-foreground text-center mb-6">
+                Create quizzes using popular trivia categories and topics.
+              </p>
+              <TriviaQuizSec />
+            </div>
           </div>
 
+          {/* Divider */}
           <div className="my-12 h-1 w-full rounded-full border-0 bg-gradient-to-r from-[#00ffcc] via-[#3366ff] to-[#cc00ff] shadow-[0_0_10px_#00ffcc]" />
+
+          {/* GenQuiz Section */}
           <GenQuiz />
         </div>
       </div>

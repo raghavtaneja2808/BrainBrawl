@@ -137,23 +137,35 @@ const Quiz = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex justify-center items-center min-h-screen">
-        {!quizCompleted ? (
-          <QuestionsCard
-            questionData={currentQuestion}
-            onOptionSelect={handleNextQuestion}
-            Index={currentQuestionIndex}
-            onNext={handleNextQuestion}
-            onCorrect={() => setScore((prev) => prev + 1)}
-          />
-        ) : (
-          <div className="flex flex-col items-center justify-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
-              Quiz Complete 🎉
-            </h2>
-            <ResultCircle correct={score} total={questionData.length} />
-          </div>
-        )}
+      <div className="flex justify-between items-start px-4 py-10">
+        {/* Custom Mode Section (Left side) */}
+        <div className="w-full md:w-1/3 pr-4">
+          <h2 className="text-xl font-bold mb-4">Custom Quiz Mode</h2>
+          {/* You can display the custom quiz mode information or setup here */}
+          <p>Category: {category}</p>
+          <p>Difficulty: {difficulty}</p>
+          <p>Type: {type}</p>
+        </div>
+
+        {/* Trivia Mode Section (Right side) */}
+        <div className="w-full md:w-2/3">
+          {!quizCompleted ? (
+            <QuestionsCard
+              questionData={currentQuestion}
+              onOptionSelect={handleNextQuestion}
+              Index={currentQuestionIndex}
+              onNext={handleNextQuestion}
+              onCorrect={() => setScore((prev) => prev + 1)}
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center">
+              <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
+                Quiz Complete 🎉
+              </h2>
+              <ResultCircle correct={score} total={questionData.length} />
+            </div>
+          )}
+        </div>
       </div>
       <Footer />
     </div>
