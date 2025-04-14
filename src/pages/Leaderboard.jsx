@@ -1,142 +1,26 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
-=======
-import React, { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
->>>>>>> 1722d55d7728632eeae4f81ea13e35b57fdd579f
+import React, { useEffect, useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import Footer from "@/components/ui/footer";
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/ui/footer";
+import { motion } from "framer-motion";
 
 export default function LeaderboardPage() {
-<<<<<<< HEAD
-  const currentUser = users[7];
-  const topThree = users.slice(0, 3);
-  const rest = users.slice(3);
-
-  const [selectedOpponent, setSelectedOpponent] = useState(null);
-  const [isChallengeMode, setIsChallengeMode] = useState(false);
-
-  const getMedal = (rank) => ["🥇", "🥈", "🥉"][rank] || `#${rank + 1}`;
-
-  const handleChallengeClick = (user) => {
-    if (user.username !== currentUser.username) {
-      setSelectedOpponent(user);
-      setIsChallengeMode(true);
-    }
-  };
-
-  const handleCancelChallenge = () => {
-    setSelectedOpponent(null);
-    setIsChallengeMode(false);
-  };
-
-  const handleSendChallenge = () => {
-    alert(`Challenge sent to ${selectedOpponent.name}`);
-    setSelectedOpponent(null);
-    setIsChallengeMode(false);
-  };
-
-  return (
-    <div className="bg-background text-foreground min-h-screen flex flex-col">
-      <Navbar />
-
-      <main className="flex-1 p-6 md:p-10 space-y-10">
-        {isChallengeMode ? (
-          <section className="max-w-xl mx-auto bg-card shadow-2xl p-8 rounded-3xl border text-center">
-            <h2 className="text-3xl font-bold mb-4">⚔️ Send a Challenge</h2>
-            <p className="text-lg mb-6">
-              Do you want to challenge <span className="font-semibold">{selectedOpponent.name}</span>?
-            </p>
-            <div className="flex justify-center gap-4">
-              <Button variant="default" onClick={handleSendChallenge}>Send</Button>
-              <Button variant="ghost" onClick={handleCancelChallenge}>Cancel</Button>
-            </div>
-          </section>
-        ) : (
-          <>
-            <section className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-              <Card className="p-6 text-center rounded-3xl shadow-md border col-span-1 lg:col-span-3 bg-muted">
-                <h2 className="text-xl font-bold mb-2">🏅 Your Position</h2>
-                <p className="text-lg">{currentUser.name} - <strong>{currentUser.points} pts</strong></p>
-                <p className="text-sm text-muted-foreground">Current Rank: <span className="font-semibold">#8</span></p>
-              </Card>
-
-              {topThree.map((user, i) => (
-                <Card
-                  key={user.username}
-                  className="flex flex-col items-center p-6 bg-card shadow-lg rounded-2xl border hover:scale-105 transition"
-                >
-                  <Avatar className="w-20 h-20 mb-3">
-                    <AvatarImage src={`https://avatars.dicebear.com/api/avataaars/${user.username}.svg`} />
-                    <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold">{user.name}</h3>
-                    <p className="text-sm">{getMedal(i)} - {user.points} pts</p>
-                  </div>
-                </Card>
-              ))}
-            </section>
-
-            <section className="bg-muted rounded-3xl p-6 shadow-inner max-h-[60vh] overflow-y-auto custom-scrollbar">
-              <style jsx>{`
-                .custom-scrollbar::-webkit-scrollbar { display: none; }
-                .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-              `}</style>
-              <h2 className="text-xl font-bold mb-4">🏆 Other Competitors</h2>
-              <div className="space-y-4">
-                {rest.map((user, index) => (
-                  <Card
-                    key={user.username}
-                    className="flex items-center justify-between p-4 bg-card border rounded-xl hover:shadow-lg transition-all"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 text-center text-lg font-bold">#{index + 4}</div>
-                      <Avatar className="w-10 h-10">
-                        <AvatarImage src={`https://avatars.dicebear.com/api/avataaars/${user.username}.svg`} />
-                        <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-semibold">{user.name}</p>
-                        <p className="text-xs text-muted-foreground">@{user.username}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      <span className="text-sm font-medium text-blue-500">{user.points} pts</span>
-                      {user.username !== currentUser.username && (
-                        <Button size="sm" variant="outline" onClick={() => handleChallengeClick(user)}>
-                          Challenge
-                        </Button>
-                      )}
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            </section>
-          </>
-        )}
-      </main>
-
-=======
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("/api/users"); // Replace with your API endpoint
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
+        const response = await fetch("/api/users");
+        if (!response.ok) throw new Error("Failed to fetch users");
         const data = await response.json();
         setUsers(data);
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -144,158 +28,95 @@ export default function LeaderboardPage() {
     fetchUsers();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const getMedal = (rank) => ["🥇", "🥈", "🥉"][rank] || `#${rank + 1}`;
 
-  const currentUser = users.find((user) => user.rank === 8); // Example current user
-  const topThree = users.slice(0, 3); // Top three players
-  const rest = users.slice(3); // Remaining players
+  const topThree = users.slice(0, 3);
+  const rest = users.slice(3);
+
+  if (loading) return <div className="text-center mt-20 text-lg">Loading...</div>;
+  if (error) return <div className="text-center mt-20 text-red-500">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
-      <div className="p-8 flex flex-col gap-8 lg:gap-12">
-        {/* Current User Section */}
-        <div className="bg-gray-200 dark:bg-slate-700 rounded-xl p-6 text-center">
-          <h2 className="text-lg font-semibold">📍 Your Position</h2>
-          <p className="text-xl font-bold mt-1">Rank 8 - {currentUser?.name}</p>
-          <p className="text-yellow-300">{currentUser?.points} points</p>
-        </div>
+      <main className="flex-1 py-12 px-4 md:px-10 space-y-12">
+        <section className="text-center">
+          <h1 className="text-4xl font-bold mb-4">🏆 Brain Brawl Leaderboard</h1>
+          <p className="text-muted-foreground text-lg">
+            See where you stand and challenge your rivals!
+          </p>
+        </section>
 
-        {/* Top Three and Rest of Leaderboard */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-20">
-          {/* Top Scorers */}
-          <div className="w-full lg:w-1/2 flex justify-center items-end gap-10 lg:gap-40 mt-8 lg:mt-24 mb-10 lg:mb-20 relative order-first lg:order-first">
-            {[1, 0, 2].map((pos) => (
-              <div
-                key={pos}
-                className="flex flex-col items-center gap-2 lg:gap-4 relative"
+        <section className="grid gap-10 grid-cols-1 md:grid-cols-3 max-w-6xl mx-auto">
+          {topThree.map((user, index) => (
+            <motion.div
+              key={user.username}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+              className="bg-card rounded-2xl p-6 shadow-2xl flex flex-col items-center text-center border border-muted"
+            >
+              <div className="text-4xl mb-2">{getMedal(index)}</div>
+              <Avatar className="w-20 h-20 mb-4">
+                <AvatarImage src={`https://avatars.dicebear.com/api/avataaars/${user.username}.svg`} />
+                <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+              </Avatar>
+              <h3 className="text-lg font-semibold">{user.name}</h3>
+              <p className="text-sm text-muted-foreground">@{user.username}</p>
+              <p className="mt-2 text-yellow-400 font-bold text-lg">{user.points} pts</p>
+            </motion.div>
+          ))}
+        </section>
+
+        <section className="max-w-5xl mx-auto bg-muted rounded-3xl p-6 shadow-inner">
+          <h2 className="text-2xl font-bold mb-6 text-center">🎯 All Competitors</h2>
+          <div className="space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar">
+            {rest.map((user, index) => (
+              <Card
+                key={user.username}
+                className="flex items-center justify-between p-4 bg-card border rounded-xl hover:shadow-lg transition-all"
               >
-                <div
-                  className={`bg-gradient-to-br from-gray-800 to-slate-700 border-4 border-yellow-400 rounded-2xl p-2 lg:p-4 shadow-2xl relative ${
-                    pos === 0
-                      ? "scale-125 lg:scale-[1.8] z-20"
-                      : "scale-105 lg:scale-110"
-                  } animate-pulse`}
-                >
-                  <Avatar
-                    className={
-                      pos === 0
-                        ? "w-16 h-16 lg:w-32 lg:h-32"
-                        : "w-12 h-12 lg:w-20 lg:h-20"
-                    }
-                  >
-                    <AvatarImage
-                      src={`https://avatars.dicebear.com/api/avataaars/${topThree[pos].username}.svg`}
-                    />
-                    <AvatarFallback>
-                      {topThree[pos].name.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
+                <div className="flex items-center gap-4">
+                  <div className="w-8 font-semibold text-center">#{index + 4}</div>
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage src={`https://avatars.dicebear.com/api/avataaars/${user.username}.svg`} />
+                    <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
+                  <div>
+                    <p className="font-semibold">{user.name}</p>
+                    <p className="text-xs text-muted-foreground">@{user.username}</p>
+                  </div>
                 </div>
-                <div
-                  className={`text-center ${
-                    pos === 0
-                      ? "text-lg lg:text-xl mt-4 lg:mt-20"
-                      : "text-sm lg:text-base"
-                  }`}
-                >
-                  <p className="font-semibold mt-2 lg:mt-4">
-                    {topThree[pos].name}
-                  </p>
-                  <p className="text-yellow-300 text-sm lg:text-base">
-                    {topThree[pos].points} pts
-                  </p>
-                  <p className="text-slate-400 text-xs lg:text-sm">
-                    Rank {pos + 1}
-                  </p>
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-medium text-yellow-400">{user.points} pts</span>
+                  <Button size="sm" variant="outline" onClick={() => setSelectedUser(user)}>
+                    Challenge
+                  </Button>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
+        </section>
 
-          {/* Rest of the Leaderboard */}
-          <div className="w-full lg:w-1/2 max-h-[70vh] overflow-y-auto custom-scrollbar order-last lg:order-last">
-            <style jsx>{`
-              .custom-scrollbar::-webkit-scrollbar {
-                display: none;
-              }
-              .custom-scrollbar {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-              }
-            `}</style>
-            <Card className="bg-gray-100 dark:bg-[#1e293b] rounded-xl shadow-xl">
-              <CardContent className="h-full overflow-y-auto px-0 py-4">
-                <AnimatePresence>
-                  {rest.map((user, index) => (
-                    <motion.div
-                      key={user.username}
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -50 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: index * 0.05,
-                        ease: "easeOut",
-                      }}
-                      className={`flex items-center gap-4 lg:gap-6 px-4 lg:px-6 py-2 lg:py-4 border-b border-gray-300 dark:border-slate-700 hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors ${
-                        user.username === currentUser?.username
-                          ? "bg-gray-200 dark:bg-slate-800"
-                          : ""
-                      }`}
-                    >
-                      {/* Rank */}
-                      <div className="text-sm lg:text-lg text-gray font-mono w-[30px] text-center">
-                        {index + 4}
-                      </div>
-
-                      {/* Avatar */}
-                      <Avatar className="w-[30px] h-[30px]">
-                        <AvatarImage
-                          src={`https://avatars.dicebear.com/api/avataaars/${user.username}.svg`}
-                          alt={user.name}
-                        />
-                        <AvatarFallback>
-                          {user.name.slice(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-
-                      {/* User Info */}
-                      <div className="flex-1 text-sm lg:text-base">
-                        {/* Name and Accuracy */}
-                        <div className="font-medium flex justify-between items-center">
-                          {user.name}
-                          <span className="text-xs lg:text-sm text-gray-600 dark:text-slate-400 ml-2 lg:ml-4">
-                            {user.accuracy}%
-                          </span>
-                        </div>
-                        <div className="text-xs lg:text-sm text-gray-600 dark:text-slate-400 mb-0.5 lg:mb-1">
-                          {user.username}
-                        </div>
-
-                        {/* Accuracy Bar */}
-                        <div className="w-full h-1 lg:h-2 bg-gray-300 dark:bg-slate-600 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-green-400 via-yellow-300 to-red-400 rounded-full transition-all duration-500"
-                            style={{ width: `${user.accuracy}%` }}
-                          ></div>
-                        </div>
-                      </div>
-
-                      {/* Points */}
-                      <div className="text-yellow-400 font-bold text-sm lg:text-lg">
-                        {user.points} pts
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </CardContent>
+        {selectedUser && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <Card className="max-w-md p-6 bg-card rounded-3xl text-center border shadow-xl">
+              <h2 className="text-2xl font-bold mb-4">⚔️ Challenge</h2>
+              <p className="text-lg mb-6">
+                Challenge <span className="font-semibold">{selectedUser.name}</span>?
+              </p>
+              <div className="flex justify-center gap-4">
+                <Button onClick={() => alert(`Challenge sent to ${selectedUser.name}`)}>
+                  Send
+                </Button>
+                <Button variant="ghost" onClick={() => setSelectedUser(null)}>
+                  Cancel
+                </Button>
+              </div>
             </Card>
           </div>
-        </div>
-      </div>
->>>>>>> 1722d55d7728632eeae4f81ea13e35b57fdd579f
+        )}
+      </main>
       <Footer />
     </div>
   );
