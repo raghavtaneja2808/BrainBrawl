@@ -31,9 +31,9 @@ app.use(
         // domain: '.railway.app' // Allows subdomains to access the cookie
       }      })
   );
-app.use("/api/generate-quiz", quizRoute);
-app.use(passport.initialize())
+  app.use(passport.initialize())
 app.use(passport.session())
+app.use("/api", quizRoute);
 require("./models/user.js");
 require("./services/passport.js")
 mongoose.connect(process.env.MONGO_URI).then(()=>console.log("DB connected"));

@@ -1,17 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import { Card, CardContent } from "../components/ui/card";
+import AuthContext from '@/assets/AuthContext';
 
-const data = [
-  { day: 'Mon', score: 80, time: 5 },
-  { day: 'Tue', score: 70, time: 4 },
-  { day: 'Wed', score: 90, time: 6 },
-  { day: 'Thu', score: 60, time: 3 },
-  { day: 'Fri', score: 75, time: 5 },
-];
-
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -30,6 +24,18 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const QuizProgressChart = () => {
+  let {user,refreshUser}=useContext(AuthContext);
+  const data = daysOfWeek.map(day => {
+    const stats = user?.dailyStats?.find(entry => entry.day === day);
+    return {
+      day,
+      score: stats?.score || 0,
+      time: stats?.timeSpent || 0,
+    };
+  });
+  console.log("user.dailyStats", user?.dailyStats);
+
+  console.log(data)
   return (
     <Card className="w-full bg-white dark:bg-black shadow-md rounded-2xl border border-gray-200 dark:border-zinc-700">
       <CardContent>

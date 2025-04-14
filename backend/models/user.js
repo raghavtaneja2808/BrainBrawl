@@ -1,20 +1,27 @@
-const mongoose=require("mongoose");
-const bcrypt=require("bcryptjs");
-const {Schema}=mongoose;
-const userSchema=Schema({
-    googleID:{type:String,required:false},
-    name:{type:String,required:true},
-    email:{type:String,required:true},
-    password:{type:String,required:true},
-    photo:String,
-    verified:{type:Boolean,required:true},
-    score:{type:Number,default:0},
-    accuracy:{type:Number,default:0}
-})
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
+const { Schema, default: mongoose } = require("mongoose");
+
+const userSchema = Schema({
+    googleID: { type: String, required: false },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    photo: String,
+    verified: { type: Boolean, required: true },
+    score: { type: Number, default: 0 },
+    accuracy: { type: Number, default: 0 },
+    quizCount: { type: Number, default: 0 }, // To track how many quizzes the user has completed
+    questionsSolvedMap: { type: Map, of: Number, default: {} },
+    totalTimeSpent: { type: Number, default: 0 },
+    timeSpentMap: { type: Map, of: Number, default: {} },
+    streak: { type: Number, default: 0 },
+    lastLoginDate: { type: Date, default: Date.now },
+    dailyStats: [
+        {
+          day: { type: String, required: true }, // 'Mon', 'Tue', etc.
+          score: { type: Number, default: 0 },
+          timeSpent: { type: Number, default: 0 },
+        },
+      ], // This will store daily data
+    location:{type:String}
 });
-mongoose.model("users",userSchema);
+module.exports = mongoose.model("users", userSchema);

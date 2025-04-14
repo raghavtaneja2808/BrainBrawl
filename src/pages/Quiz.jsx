@@ -1,16 +1,16 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
+import axios from "axios";
 import Loading from "@/components/Loading";
 import Navbar from "@/components/Navbar";
 import QuestionsCard from "@/components/QuestionsCard";
 import Footer from "@/components/ui/footer";
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
 import ResultCircle from "@/components/ResultCircle";
 
 const Quiz = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
 
-  // Get params for trivia mode
   const num = searchParams.get("num");
   const category = searchParams.get("category");
   const difficulty = searchParams.get("difficulty");
@@ -20,13 +20,16 @@ const Quiz = () => {
   const [questionData, setQuestionData] = useState([]);
   const [score, setScore] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
   const didFetchRef = useRef(false);
+  const startTimeRef = useRef(Date.now());
 
   const isTriviaMode = location.pathname.includes("trivia");
   const isCustomMode = location.pathname.includes("custom");
+
+  // Trivia mode
   useEffect(() => {
-    if (!isTriviaMode) return;
-    if (didFetchRef.current) return;
+    if (!isTriviaMode || didFetchRef.current) return;
     didFetchRef.current = true;
 
     const apiUrl = new URL("https://opentdb.com/api.php");
@@ -46,15 +49,15 @@ const Quiz = () => {
         setLoading(false);
       });
   }, [isTriviaMode, num, type, difficulty, category]);
+
+  // Custom mode
   useEffect(() => {
-    if (!isCustomMode) return;
-    if (didFetchRef.current) return;
+    if (!isCustomMode || didFetchRef.current) return;
     didFetchRef.current = true;
+
     fetch(`${import.meta.env.VITE_API_URL}/api/generate-quiz`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         numQuestions: num,
         difficulty: difficulty,
@@ -65,25 +68,21 @@ const Quiz = () => {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
-      let questionsArray = [];
+
       function read() {
         reader.read().then(({ done, value }) => {
-          if (done) {
-            return;
-          }
+          if (done) return;
           const chunk = decoder.decode(value, { stream: true });
           buffer += chunk;
           const lines = buffer.split("\n");
           buffer = lines.pop();
+
           for (const line of lines) {
             if (!line.trim()) continue;
             try {
               const data = JSON.parse(line);
-              questionsArray.push(data);
-              if (loading) {
-                setLoading(false);
-              }
               setQuestionData((prev) => [...prev, data]);
+              setLoading(false);
             } catch (err) {
               console.error("JSON parse error:", err, "Line:", line);
             }
@@ -91,12 +90,40 @@ const Quiz = () => {
           read();
         });
       }
+
       read();
     });
   }, [isCustomMode, num, type, difficulty, category]);
+
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prev) => prev + 1);
   };
+
+  const submitResult = async () => {
+    if (submitted) return;
+    setSubmitted(true);
+
+    const payload = {
+      score: score,
+      correctAnswers: score,
+      totalQuestions: questionData.length,
+      timeSpent: Math.floor((Date.now() - startTimeRef.current) / 60000), // in minutes
+    };
+
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/quiz/submit`, payload);
+      console.log("Submitted:", res.data);
+    } catch (error) {
+      console.error("Error submitting quiz result:", error);
+    }
+  };
+
+  // ✅ Call submit when quiz ends
+  useEffect(() => {
+    if (questionData.length > 0 && currentQuestionIndex >= questionData.length) {
+      submitResult();
+    }
+  }, [currentQuestionIndex, questionData]);
 
   if (loading) return <Loading />;
 
@@ -104,30 +131,28 @@ const Quiz = () => {
     return <p className="text-center mt-20 text-xl">No questions found.</p>;
   }
 
+  const quizCompleted = currentQuestionIndex >= questionData.length;
   const currentQuestion = questionData[currentQuestionIndex];
 
   return (
     <div>
       <Navbar />
       <div className="flex justify-center items-center min-h-screen">
-        {currentQuestion ? (
+        {!quizCompleted ? (
           <QuestionsCard
             questionData={currentQuestion}
             onOptionSelect={handleNextQuestion}
             Index={currentQuestionIndex}
-            onNext={() => setCurrentQuestionIndex((prev) => prev + 1)}
+            onNext={handleNextQuestion}
             onCorrect={() => setScore((prev) => prev + 1)}
           />
         ) : (
-          <>
           <div className="flex flex-col items-center justify-center">
-  <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
-    Quiz Complete 🎉
-  </h2>
-  
-  <ResultCircle correct={score} total={currentQuestionIndex} />
-</div>
-        </>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
+              Quiz Complete 🎉
+            </h2>
+            <ResultCircle correct={score} total={questionData.length} />
+          </div>
         )}
       </div>
       <Footer />
