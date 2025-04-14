@@ -91,6 +91,7 @@ const ResultCircle = ({ correct, total }) => {
             {animatedPercentage}%
           </text>
         </svg>
+        {/* Vercel Push */}
       </div>
     </div>
   );
