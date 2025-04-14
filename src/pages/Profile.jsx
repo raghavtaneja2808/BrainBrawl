@@ -9,14 +9,15 @@ import Loading from '@/components/Loading';
 const Profile = () => {
   const {user,refreshUser}=useContext(AuthContext)
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    if (!user) {
-      refreshUser(); 
-    } else {
-      setLoading(false); 
-    }
-  }, [user, refreshUser])
+    const fetchData = async () => {
+      await refreshUser();
+      setLoading(false);
+    };
+  
+    fetchData();
+  }, []);
+  
   if(loading)return <Loading text="Loading data"/>
   return (
     <div>
