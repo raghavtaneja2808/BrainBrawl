@@ -26,16 +26,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const QuizProgressChart = () => {
   let {user,refreshUser}=useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!user) {
-      refreshUser(); 
-    } else {
-      setLoading(false); 
-    }
-  }, [user, refreshUser])
-  if(loading)return <Loading text="Loading data"/>
+
   const data = daysOfWeek.map(day => {
     const stats = user?.dailyStats?.find(entry => entry.day === day);
     return {

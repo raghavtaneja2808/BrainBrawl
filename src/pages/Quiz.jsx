@@ -97,6 +97,7 @@ const Quiz = () => {
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prev) => prev + 1);
+    
   };
 
   const submitResult = async () => {
