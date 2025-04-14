@@ -113,13 +113,13 @@ const QuizAppFeedbackForm = () => {
     };
 
     return (
-        <div className={`bg-gray-100 dark:bg-gray-800 p-6 rounded-lg`}>
+        <div className={`bg-gray-100 dark:bg-black p-6 rounded-lg`}>
             <Navbar />
             
             
 
-            <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 shadow-md rounded-lg p-8">
-                <h1 className="text-3xl font-semibold text-blue-600 dark:text-blue-400 mb-8 text-center bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+            <div className="max-w-2xl mx-auto bg-white dark:bg-muted shadow-md rounded-lg p-8">
+                <h1 className="text-3xl font-semibold text-black dark:text-white mb-8 text-center ">
                     Quiz App Feedback
                 </h1>
                 <form id="feedbackForm" className="space-y-6" onSubmit={handleSubmit}>
@@ -127,7 +127,7 @@ const QuizAppFeedbackForm = () => {
                     <div>
                         <label
                             htmlFor="rating"
-                            className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
+                            className="block text-black dark:text-white text-sm font-bold mb-2"
                         >
                             Overall Experience:
                         </label>
@@ -186,7 +186,7 @@ const QuizAppFeedbackForm = () => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full ${
+                        className={`bg-black hover:bg-gray text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full ${
                             isSubmitting && "opacity-50 cursor-not-allowed"
                         }`}
                         disabled={isSubmitting}
