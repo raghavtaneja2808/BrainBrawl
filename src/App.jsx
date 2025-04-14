@@ -13,6 +13,7 @@ import OtpVerification from "./components/OtpVerification";
 import { AuthProvider } from "./assets/AuthContext";
 import Profile from "./pages/Profile";
 import axios from "axios";
+import FeedbackPage from "./pages/FeedbackPage";
 
 function App() {
   axios.defaults.withCredentials=true
@@ -40,6 +41,7 @@ function App() {
           <Route path="/leaderboard" element={<Leaderboard />} />
 
           <Route path="/otp" element={<OtpVerification />} />
+          <Route path="/feedback" element={< FeedbackPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
