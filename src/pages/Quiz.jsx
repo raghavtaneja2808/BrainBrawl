@@ -97,6 +97,7 @@ const Quiz = () => {
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prev) => prev + 1);
+    
   };
 
   const submitResult = async () => {
@@ -125,7 +126,7 @@ const Quiz = () => {
     }
   }, [currentQuestionIndex, questionData]);
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading text={"Generating Questions for You"} />;
 
   if (!questionData || questionData.length === 0) {
     return <p className="text-center mt-20 text-xl">No questions found.</p>;

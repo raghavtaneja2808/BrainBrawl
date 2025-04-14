@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ProfileCard from '@/components/ProfileCard';
 import QuizProgressChart from '@/components/QuizProgressChart';
 import MotivationCard from '@/components/MotivationCard'; // ⬅️ Added here
 import Navbar from '@/components/Navbar';
+import AuthContext from '@/assets/AuthContext';
+import Loading from '@/components/Loading';
 
 const Profile = () => {
+  const {user,refreshUser}=useContext(AuthContext)
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      refreshUser(); 
+    } else {
+      setLoading(false); 
+    }
+  }, [user, refreshUser])
+  if(loading)return <Loading text="Loading data"/>
   return (
     <div>
       <Navbar />
