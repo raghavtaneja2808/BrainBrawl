@@ -17,6 +17,7 @@ const Profile = () => {
   
     fetchData();
   }, []);
+  // done
   
   if(loading)return <Loading text="Loading data"/>
   return (
