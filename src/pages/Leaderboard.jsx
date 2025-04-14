@@ -15,7 +15,7 @@ const ChallengeAnimation = ({ isAnimating }) => (
   <AnimatePresence>
     {isAnimating && (
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-yellow-400 rounded-full w-24 h-24 flex items-center justify-center text-white font-bold shadow-lg"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-24 h-24 flex items-center justify-center text-white font-bold shadow-lg"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.5 }}
