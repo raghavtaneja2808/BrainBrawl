@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'; // Added useEffe
 import { Card } from '@/components/ui/card';
 import {
     Mail, MapPin, ClipboardList, Flame, LogOut,
+    CheckCircle,
 } from 'lucide-react';
 import AuthContext from '@/assets/AuthContext';
 import axios from 'axios';
@@ -52,8 +53,9 @@ const ProfileCard = () => {
 
     const userData = [
         { icon: Mail, label: 'Email', value: user?.email || 'No Email' },
-        { icon: ClipboardList, label: 'Total Quizzes Attempted', value: '24' },
-        { icon: Flame, label: 'Login Streak', value: '6 days' },
+        { icon: ClipboardList, label: 'Total Quizzes Attempted', value: user?.quizCount||'' },
+        {icon:CheckCircle,label:'Accuracy',value:user?.accuracy+" %"||'%'}
+
     ];
 
     return (
@@ -62,7 +64,7 @@ const ProfileCard = () => {
                 <div className="flex flex-col items-center gap-6">
                     {/* Avatar */}
                     <div
-                        className="w-28 h-28 md:w-36 md:h-36 rounded-full border-4 border-gray-300 dark:border-gray-500 mb-4"
+                        className="w-25 h-25 md:w-36 md:h-36 rounded-full border-4 border-gray-300 dark:border-gray-500 mb-4"
                         dangerouslySetInnerHTML={{ __html: user?.photo || '' }}
                     />
 
@@ -79,7 +81,7 @@ const ProfileCard = () => {
                                     type="text"
                                     value={tempLocation}
                                     onChange={(e) => setTempLocation(e.target.value)}
-                                    className="px-3 py-1 rounded-lg border dark:bg-zinc-900 border-gray-300 text-sm w-full sm:w-auto"
+                                    className="px-3 rounded-lg border dark:bg-zinc-900 border-gray-300 text-sm w-full sm:w-auto"
                                 />
                                 <button
                                     onClick={() => {

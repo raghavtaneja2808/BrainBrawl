@@ -37,10 +37,8 @@ function App() {
           <Route path="/quiz/custom" element={<Quiz />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/profile" element={<Profile />} />
-
           <Route path="/leaderboard" element={<Leaderboard />} />
 
-          <Route path="/otp" element={<OtpVerification />} />
           <Route path="/feedback" element={< FeedbackPage />} />
         </Routes>
       </BrowserRouter>
