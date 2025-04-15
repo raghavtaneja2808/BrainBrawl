@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import "./App.css";
 import Landing from "./pages/Landing";
 import CreateQuiz from "./pages/CreateQuiz";

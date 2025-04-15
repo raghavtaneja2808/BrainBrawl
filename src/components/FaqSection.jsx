@@ -28,7 +28,7 @@ const faqs = [
   },
 ];
 
-const FaqSection = () => {
+const FaqSection = ({ faqRef }) => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -38,6 +38,7 @@ const FaqSection = () => {
   return (
     <section
       id="faq"
+      ref={faqRef}
       className="mt-[-90px] min-h-screen py-16 px-6 md:px-12 bg-white dark:bg-black text-gray-900 dark:text-gray-100 transition-colors duration-300 flex items-center justify-center"
     >
       <div className="w-full max-w-4xl">
@@ -83,7 +84,11 @@ const AccordionItem = ({ index, openIndex, toggleFAQ, faq }) => {
         className="w-full flex justify-between items-center px-6 py-4 text-left text-base font-medium hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors duration-300"
       >
         {faq.question}
-        <span className={`text-xl transform transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
+        <span
+          className={`text-xl transform transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        >
           {isOpen ? "▲" : "▼"}
         </span>
       </button>
