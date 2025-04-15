@@ -17,7 +17,6 @@ import FeedbackPage from "./pages/FeedbackPage";
 import Payment from "./components/Payment";
 import ChatPage from "./components/ChatPage";
 import AnotherUser from "./pages/AnotherUser";
-import ChatPage from "./pages/ChatPage";
 
 function App() {
   axios.defaults.withCredentials=true
