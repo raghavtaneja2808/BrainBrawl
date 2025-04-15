@@ -40,13 +40,34 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-          {user?<Avatar user={user}/>:(<>
-  <Button onClick={()=>{setShowLogin(true)}} variant="ghost" className="bg-white text-black border border-gray-500 hover:bg-gray-100 m-1 dark:bg-black dark:text-white hover:cursor-pointer" >
-              Login
-            </Button>
-            <Button className="hidden hover:cursor-pointer sm:block">
-              Get Brain+ 
-            </Button></>)}
+          {user ? (
+    <Avatar user={user} />
+  ) : (
+    <>
+      <Button
+        onClick={() => setShowLogin(true)}
+        variant="ghost"
+        className="bg-white text-black border border-gray-500 hover:bg-gray-100 m-1 dark:bg-black dark:text-white hover:cursor-pointer"
+      >
+        Login
+      </Button>
+    </>
+  )}
+
+  {user ? (
+    <Link to="/payment">
+      <Button className="hidden hover:cursor-pointer sm:block">
+        Get Brain+
+      </Button>
+    </Link>
+  ) : (
+    <Button
+      onClick={() => setShowLogin(true)}
+      className="hidden hover:cursor-pointer sm:block"
+    >
+      Get Brain+
+    </Button>
+  )}
             <ThemeToggle />
 
             <button

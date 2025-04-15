@@ -23,11 +23,6 @@ const Payment = () => {
           <p className="text-lg opacity-90 leading-relaxed">
             Challenge your mind with quizzes on logic, tech, science & more. Climb the leaderboard and win bragging rights!
           </p>
-          <img
-            src="/images/quiz-illustration.svg"
-            alt="Quiz Illustration"
-            className="w-full rounded-xl mt-4 hidden md:block"
-          />
         </div>
 
         {/* Payment Form Section */}
@@ -76,18 +71,27 @@ const Payment = () => {
           </Card>
         </div>
 
-        {/* Right Premium Features Section */}
-        <div className="md:w-1/4 w-full space-y-4 animate-fadeInUp delay-300 text-center md:text-left">
-          <h3 className="text-2xl font-bold mb-2">🚀 Premium Perks</h3>
-          <ul className="space-y-2 text-sm md:text-base list-disc list-inside">
-            <li>Access exclusive quiz categories</li>
-            <li>Challenge mode with friends</li>
-            <li>Leaderboard boost & top-tier visibility</li>
-            <li>Early access to new quiz themes</li>
-            <li>Ad-free immersive experience</li>
-            <li>Priority support & updates</li>
-          </ul>
-        </div>
+      {/* Pricing Features Section */}
+<div className="w-full md:w-1/3 space-y-4 text-center animate-fadeInUp delay-150">
+  <h3 className="text-2xl font-bold mb-2">💸 Plan Details</h3>
+  <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-zinc-800 dark:to-zinc-700 p-4 rounded-xl shadow-md text-left text-sm md:text-base">
+    <ul className="list-disc list-inside space-y-2">
+      <li>
+        <span className="font-semibold">Monthly Plan:</span> ₹200/month – Ideal for short-term commitment and trying out features.
+      </li>
+      <li>
+        <span className="font-semibold">Yearly Plan:</span> ₹2400/year -  get full access all year long.
+      </li>
+      <li>
+        Cancel anytime from your profile settings.
+      </li>
+      <li>
+        Secure payments powered by industry-standard encryption.
+      </li>
+    </ul>
+  </div>
+</div>
+
       </div>
 
       {/* Footer */}
