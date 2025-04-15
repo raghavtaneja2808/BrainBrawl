@@ -18,7 +18,7 @@ const CustomQuizSec = () => {
 
         <CardHeader>
           <CardTitle>🎯 Custom Quiz</CardTitle>
-          <p className="text-sm mt-1">Pick your preferences below!</p>
+          <p className="text-sm mt-1">Pick your preferences below! we will create a quiz for you , even your cheat questions for exam😉</p>
         </CardHeader>
 
         <CardContent className="space-y-4">
@@ -30,7 +30,7 @@ const CustomQuizSec = () => {
 
           <div>
             <Label>Category</Label>
-            <Input placeholder="Your Category" value={category} onChange={(e) => setCategory(e.target.value)} />
+            <Input placeholder="Write a Categroy 😎"  onChange={(e) => setCategory(e.target.value)} />
           </div>
 
           <div>
