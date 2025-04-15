@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "@/components/Loading";
@@ -6,11 +6,12 @@ import Navbar from "@/components/Navbar";
 import QuestionsCard from "@/components/QuestionsCard";
 import Footer from "@/components/ui/footer";
 import ResultCircle from "@/components/ResultCircle";
+import AuthContext from "@/assets/AuthContext";
 
 const Quiz = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-
+  const {user,refreshUser}=useContext(AuthContext)
   const num = searchParams.get("num");
   const category = searchParams.get("category");
   const difficulty = searchParams.get("difficulty");
@@ -97,7 +98,7 @@ const Quiz = () => {
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prev) => prev + 1);
-    
+
   };
 
   const submitResult = async () => {
@@ -125,28 +126,18 @@ const Quiz = () => {
       submitResult();
     }
   }, [currentQuestionIndex, questionData]);
-
+  const quizCompleted = currentQuestionIndex >= questionData.length;
   if (loading) return <Loading text={"Generating Questions for You"} />;
 
   if (!questionData || questionData.length === 0) {
     return <p className="text-center mt-20 text-xl">No questions found.</p>;
   }
 
-  const quizCompleted = currentQuestionIndex >= questionData.length;
   const currentQuestion = questionData[currentQuestionIndex];
-
   return (
     <div>
       <Navbar />
       <div className="flex justify-between items-start px-4 py-10">
-        {/* Custom Mode Section (Left side) */}
-        <div className="w-full md:w-1/3 pr-4">
-          <h2 className="text-xl font-bold mb-4">Custom Quiz Mode</h2>
-          {/* You can display the custom quiz mode information or setup here */}
-          <p>Category: {category}</p>
-          <p>Difficulty: {difficulty}</p>
-          <p>Type: {type}</p>
-        </div>
 
         {/* Trivia Mode Section (Right side) */}
         <div className="w-full md:w-2/3">
@@ -168,7 +159,6 @@ const Quiz = () => {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
