@@ -5,9 +5,12 @@ const details=require("./routes/details")
 const mongoose=require("mongoose")
 const session=require("express-session");
 const passport = require("passport");
+const http = require('http');
+const setupChatChallenge = require('./services/chatChallenge');
 require("dotenv").config();
 const testLoadRoute = require("./routes/testLoad");
 const app = express();
+const server = http.createServer(app); // ✅ wrap express with http
 app.set('trust proxy', true);
 app.use(cors({credentials:true,origin:process.env.CLIENT_URL}));
 app.use(express.json());
@@ -34,6 +37,15 @@ app.use(
   );
   app.use(passport.initialize())
 app.use(passport.session())
+const { Server } = require('socket.io');
+
+const io = new Server(server, {
+  cors: {
+    origin: '*', // or specific frontend domain
+    methods: ['GET', 'POST']
+  }
+});
+setupChatChallenge(io);
 app.use("/api", quizRoute);
 require("./models/user.js");
 require("./services/passport.js")
@@ -41,4 +53,4 @@ mongoose.connect(process.env.MONGO_URI).then(()=>console.log("DB connected"));
 require('./routes/authRoutes.js')(app);
 app.use("/details",details);
 const PORT = 5000;
-app.listen(PORT, () => console.log("Server started on port", PORT));
+server.listen(PORT, () => console.log("Server + Socket.io started on port", PORT));

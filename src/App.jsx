@@ -16,6 +16,7 @@ import axios from "axios";
 import FeedbackPage from "./pages/FeedbackPage";
 import Payment from "./components/Payment";
 import AnotherUser from "./pages/AnotherUser";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   axios.defaults.withCredentials=true
@@ -42,6 +43,7 @@ function App() {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/user/:userId" element={<AnotherUser/>}/>
+          <Route path="/chat/:otherUserId" element={<ChatPage />} />
           <Route path="/feedback" element={< FeedbackPage />} />
         </Routes>
       </BrowserRouter>

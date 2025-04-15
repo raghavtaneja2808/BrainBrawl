@@ -7,12 +7,13 @@ import {
 import AuthContext from '@/assets/AuthContext';
 import axios from 'axios';
 import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const AnotherProfile = ({user}) => {
     const [location, setLocation] = useState('Delhi, India');
     const [isEditing, setIsEditing] = useState(false);
     const [tempLocation, setTempLocation] = useState(location);
-
+const navigate=useNavigate()
     const Logout = async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
@@ -106,7 +107,7 @@ const AnotherProfile = ({user}) => {
                         )}
                     </div>
                         <div className='flex gap-2'>
-                        <Button className="hover:cursor-pointer">Chat</Button>
+                        <Button  className="hover:cursor-pointer" onClick={(()=>navigate(`/chat/${user._id}`))}>Chat</Button>
                             <Button className="hover:cursor-pointer">Challenge</Button>
                         </div>
                     {/* Static Info */}
