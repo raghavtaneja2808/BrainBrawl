@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import axios from "axios";
 import FeedbackPage from "./pages/FeedbackPage";
 import Payment from "./components/Payment";
+import ChatPage from "./components/ChatPage";
 
 function App() {
   axios.defaults.withCredentials=true
@@ -42,6 +43,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
 
           <Route path="/feedback" element={< FeedbackPage />} />
+          <Route path="/chatpage" element={<ChatPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
