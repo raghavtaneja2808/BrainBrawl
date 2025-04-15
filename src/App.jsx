@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import axios from "axios";
 import FeedbackPage from "./pages/FeedbackPage";
 import Payment from "./components/Payment";
+import ChatPage from "./components/ChatPage";
 import AnotherUser from "./pages/AnotherUser";
 import ChatPage from "./pages/ChatPage";
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/user/:userId" element={<AnotherUser/>}/>
           <Route path="/chat/:otherUserId" element={<ChatPage />} />
           <Route path="/feedback" element={< FeedbackPage />} />
+          <Route path="/chatpage" element={<ChatPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
