@@ -6,9 +6,9 @@ import {
 } from 'lucide-react';
 import AuthContext from '@/assets/AuthContext';
 import axios from 'axios';
+import { Button } from './ui/button';
 
-const ProfileCard = () => {
-    const { user } = useContext(AuthContext);
+const AnotherProfile = ({user}) => {
     const [location, setLocation] = useState('Delhi, India');
     const [isEditing, setIsEditing] = useState(false);
     const [tempLocation, setTempLocation] = useState(location);
@@ -105,7 +105,10 @@ const ProfileCard = () => {
                             </>
                         )}
                     </div>
-
+                        <div className='flex gap-2'>
+                        <Button className="hover:cursor-pointer">Chat</Button>
+                            <Button className="hover:cursor-pointer">Challenge</Button>
+                        </div>
                     {/* Static Info */}
                     <div className="w-full mt-6 space-y-3">
                         {userData.map((item, idx) => (
@@ -124,17 +127,11 @@ const ProfileCard = () => {
                         ))}
                     </div>
 
-                    {/* Sign Out */}
-                    <div className="mt-6 w-full flex justify-center">
-                        <button className="flex items-center gap-2 text-sm text-red-500 hover:underline hover:cursor-pointer" onClick={Logout}>
-                            <LogOut className="w-4 h-4" />
-                            Sign Out
-                        </button>
-                    </div>
+                
                 </div>
             </Card>
         </div>
     );
 };
 
-export default ProfileCard;
+export default AnotherProfile;

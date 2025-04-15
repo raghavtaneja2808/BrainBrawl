@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const quizRoute = require("./routes/quiz");
+const details=require("./routes/details")
 const mongoose=require("mongoose")
 const session=require("express-session");
 const passport = require("passport");
@@ -38,5 +39,6 @@ require("./models/user.js");
 require("./services/passport.js")
 mongoose.connect(process.env.MONGO_URI).then(()=>console.log("DB connected"));
 require('./routes/authRoutes.js')(app);
+app.use("/details",details);
 const PORT = 5000;
 app.listen(PORT, () => console.log("Server started on port", PORT));
