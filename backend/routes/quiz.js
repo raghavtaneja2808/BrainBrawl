@@ -103,4 +103,22 @@ router.post("/quiz/submit", ensureAuth, async (req, res) => {
   
 });
 
+router.get('/leaderboard', async (req, res) => {
+  console.log("Leaderboard called")
+  const mongoose=require("mongoose");
+  const User=mongoose.model("users")
+  try {
+    const topUsers = await User.find({})
+      .sort({ score: -1 }) // sort by score descending
+      .limit(100); // get top 10
+
+    res.json(topUsers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
 module.exports = router;
