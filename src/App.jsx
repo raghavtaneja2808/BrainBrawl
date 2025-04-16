@@ -17,6 +17,7 @@ import FeedbackPage from "./pages/FeedbackPage";
 import Payment from "./components/Payment";
 import ChatPage from "./components/ChatPage";
 import AnotherUser from "./pages/AnotherUser";
+import BlogBattle from "./pages/BlogBattle";
 
 function App() {
   axios.defaults.withCredentials=true
@@ -46,6 +47,7 @@ function App() {
           <Route path="/chat/:otherUserId" element={<ChatPage />} />
           <Route path="/feedback" element={< FeedbackPage />} />
           <Route path="/chatpage" element={<ChatPage />} />
+          <Route path="/quiz/custom/blogbattle" element={<BlogBattle/>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

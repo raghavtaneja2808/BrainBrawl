@@ -8,7 +8,7 @@ const setupChatChallenge = (io) => {
         socket.join(roomId);
         console.log(`📥 Socket ${socket.id} joined room: ${roomId}`);
       });
-  
+      
       // Chat messages
       socket.on('send_message', ({ roomId, senderId, message }) => {
         const payload = {

@@ -35,6 +35,14 @@ const ChatPage = () => {
   const [receiverAvatar, setReceiverAvatar] = useState(createSvgDataUri(null));
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [challengeParams, setChallengeParams] = useState({
+    num: 5,
+    difficulty: 'medium',
+    type: 'multiple',
+    category: 'general'
+  });
+  const [showIncomingChallenge, setShowIncomingChallenge] = useState(false);
+  const [incomingChallengeData, setIncomingChallengeData] = useState(null);
   const messagesEndRef = useRef(null);
   const roomIdRef = useRef('');
 
@@ -90,6 +98,18 @@ const ChatPage = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  useEffect(() => {
+    const handleReceiveChallenge = (data) => {
+      if (data.toUserId === user._id) {
+        setIncomingChallengeData(data);
+        setShowIncomingChallenge(true);
+      }
+    };
+  
+    socket.on('receive_challenge', handleReceiveChallenge);
+    return () => socket.off('receive_challenge', handleReceiveChallenge);
+  }, [user._id]);
+  
   const sendMessage = () => {
     if (!input.trim() || !user?._id) return;
 
