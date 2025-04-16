@@ -40,7 +40,7 @@ const BlogBattleNav = ({ faqRef }) => {
               <p className="text-xl font-ubuntu text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
               <a href='http://localhost:8000/blogbattle/start' className="text-lg text-gray-700 dark:text-gray-300">Quiz</a>
               </p>
-              <a href='http://localhost:8000/blogverse/blogs' className="text-lg text-gray-700 dark:text-gray-300">Blogs</a>
+              <a href='http://localhost:8000/blogverse/blog' className="text-lg text-gray-700 dark:text-gray-300">Blogs</a>
               <a href='http://localhost:8000/blogverse' className="text-lg text-gray-700 dark:text-gray-300 hover:cursor-pointer"><Button className="hover:cursor-pointer">Back to Home</Button></a>
              
             </div>
@@ -61,7 +61,7 @@ const BlogBattleNav = ({ faqRef }) => {
           {menuOpen && (
             <div className="md:hidden flex flex-col gap-4 bg-white dark:bg-black px-6 py-4">
               <a href='http://localhost:8000/blogbattle/start' className="text-lg text-gray-700 dark:text-gray-300">Quiz</a>
-              <a href='http://localhost:8000/blogverse/blogs' className="text-lg text-gray-700 dark:text-gray-300">Blogs</a>
+              <a href='http://localhost:8000/blogverse/blog' className="text-lg text-gray-700 dark:text-gray-300">Blogs</a>
               <a href='http://localhost:8000/blogverse' className="text-lg text-gray-700 dark:text-gray-300 hover:cursor-pointer"><Button className="hover:cursor-pointer">Back to Home</Button></a>
             </div>
           )}

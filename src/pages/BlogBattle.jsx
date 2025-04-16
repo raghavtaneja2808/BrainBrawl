@@ -8,6 +8,7 @@ import Footer from "@/components/ui/footer";
 import ResultCircle from "@/components/ResultCircle";
 import AuthContext from "@/assets/AuthContext";
 import BlogBattleNav from "@/components/BlogBattleNav";
+import BlogBattleResult from "@/components/BlogBattleResult";
 
 const BlogBattle = () => {
   const location = useLocation();
@@ -155,7 +156,7 @@ const BlogBattle = () => {
               <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-6">
                 Quiz Complete 🎉
               </h2>
-              <ResultCircle correct={score} total={questionData.length} />
+              <BlogBattleResult correct={score} total={questionData.length} />
             </div>
           )}
         </div>
