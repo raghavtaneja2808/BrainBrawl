@@ -5,6 +5,7 @@ import TriviaQuizSec from "@/components/TriviaQuizSec";
 import CustomQuizSec from "@/components/CustomQuizSec";
 import GenQuiz from "@/components/GenQuiz";
 import Aurora from "../../y/Aurora/Aurora";
+import AIAgentQuizSec from "@/components/AIAgentQuizSec";
 
 export default function CreateQuiz() {
   return (
@@ -58,6 +59,8 @@ export default function CreateQuiz() {
           {/* GenQuiz Section */}
           <GenQuiz />
         </div>
+
+        <AIAgentQuizSec></AIAgentQuizSec>
       </div>
 
       <Footer />
