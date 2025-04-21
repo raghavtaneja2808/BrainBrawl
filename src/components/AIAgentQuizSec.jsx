@@ -17,7 +17,7 @@ export default function AIAgentQuizSec() {
     <div className="flex justify-center"> {/* Added justify-center here */}
       <div className="bg-card border border-border rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-md w-full max-w-md">
         <h2 className="text-xl font-bold text-center mb-4 flex items-center justify-center gap-2">
-          <BotIcon className="w-6 h-6 text-blue-500" />
+          <BotIcon className="w-6 h-7 text-blue-500" />
           AI Agent Quiz
         </h2>
         <p className="text-sm text-muted-foreground text-center mb-6">
