@@ -5,6 +5,9 @@ on:
   pull_request:
     types: [opened]
 
+permissions:
+  pull-requests: write  # 👈 Required to post a comment on PRs
+
 jobs:
   greet:
     runs-on: ubuntu-latest
@@ -13,5 +16,5 @@ jobs:
         uses: actions/first-interaction@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-message: "👋 Thanks for opening your first issue! We appreciate your contribution."
           pr-message: "🎉 Thanks for your first pull request! Someone will review it soon. Welcome aboard! 🚀"
+
